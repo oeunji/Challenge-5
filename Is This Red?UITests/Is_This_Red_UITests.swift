@@ -9,6 +9,8 @@ import XCTest
 
 final class Is_This_Red_UITests: XCTestCase {
 
+    // MARK: - Setup
+
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -21,6 +23,8 @@ final class Is_This_Red_UITests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+
+    // MARK: - Tests
 
     @MainActor
     func testExample() throws {

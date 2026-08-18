@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingSecondView: View {
 
+	// MARK: - Constants
+
 	private static let lines: [String] = [
 		"Were Those Real Red?",
 		"They were all Red.",
@@ -16,9 +18,12 @@ struct OnboardingSecondView: View {
 		"Start Experience"
 	]
 
-	@Binding var didFinish: Bool
+	// MARK: - Properties
 
+	@Binding var didFinish: Bool
 	@State private var revealedCount = 1
+
+	// MARK: - Body
 
 	var body: some View {
 		ZStack {
@@ -41,6 +46,8 @@ struct OnboardingSecondView: View {
 			viewDidTap()
 		}
 	}
+
+	// MARK: - Actions
 
 	/// 모든 문장이 드러날 때까지는 한 줄씩 공개하고, 그 다음 탭에서 온보딩을 끝냅니다.
 	private func viewDidTap() {

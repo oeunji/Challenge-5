@@ -17,6 +17,8 @@ enum VisionMode: String, CaseIterable {
 	case tritanopia = "Tritanopia"          // 청색맹
 	case achromatopsia = "Achromatopsia"    // 전색맹
 
+	// MARK: - Properties
+
 	/// 이 모드의 RGB 변환 계수. 이미지 시뮬레이션과 색상 시뮬레이션이 공유하는 유일한 출처입니다.
 	var colorMatrix: (r: SIMD3<Double>, g: SIMD3<Double>, b: SIMD3<Double>) {
 		switch self {
@@ -37,7 +39,11 @@ enum VisionMode: String, CaseIterable {
 
 enum VisionSimulator {
 
+	// MARK: - Properties
+
 	private static let context = CIContext()
+
+	// MARK: - Methods
 
 	static func render(drawing: PKDrawing, rect: CGRect) -> UIImage {
 		drawing.image(from: rect, scale: 1)
@@ -85,7 +91,12 @@ enum VisionSimulator {
 	}
 }
 
+// MARK: - CIVector + SIMD3
+
 private extension CIVector {
+
+	// MARK: - Initialize
+
 	convenience init(_ vector: SIMD3<Double>) {
 		self.init(x: CGFloat(vector.x), y: CGFloat(vector.y), z: CGFloat(vector.z), w: 0)
 	}

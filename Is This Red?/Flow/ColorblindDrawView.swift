@@ -10,6 +10,8 @@ import PencilKit
 
 struct ColorblindDrawView: View {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let stackSpacing: CGFloat = 12
 		static let overlayPadding: CGFloat = 14
@@ -19,10 +21,14 @@ struct ColorblindDrawView: View {
 		static let fallbackCanvasSide: CGFloat = 1024
 	}
 
+	// MARK: - Types
+
 	enum RevealSelection: String, CaseIterable {
 		case simulated = "Simulated"
 		case normal = "Normal"
 	}
+
+	// MARK: - Properties
 
 	private static let missions: [String] = [
 		"Draw a ripe apple.",
@@ -45,6 +51,8 @@ struct ColorblindDrawView: View {
 	@State private var isRevealActive = false
 	@State private var revealSelection: RevealSelection = .simulated
 	@State private var showRevealAlert = false
+
+	// MARK: - Body
 
 	var body: some View {
 		VStack(spacing: Metric.stackSpacing) {
@@ -75,6 +83,8 @@ struct ColorblindDrawView: View {
 			Text("This will show the normal view so you can compare it with the simulated vision.")
 		}
 	}
+
+	// MARK: - Subviews
 
 	private var canvasLayers: some View {
 		GeometryReader { geo in
@@ -155,6 +165,8 @@ struct ColorblindDrawView: View {
 		.padding(.bottom, 16)
 	}
 
+	// MARK: - Computed Values
+
 	/// Reveal 중 "Normal"을 고르면 실제 색을, 그 외에는 선택한 색각 모드를 적용합니다.
 	private var effectiveMode: VisionMode {
 		isShowingNormal ? .normal : selectedMode
@@ -167,6 +179,8 @@ struct ColorblindDrawView: View {
 	private var isShowingNormal: Bool {
 		isRevealActive && revealSelection == .normal
 	}
+
+	// MARK: - Methods
 
 	private func renderAndSimulate() {
 		let size = renderSize == .zero

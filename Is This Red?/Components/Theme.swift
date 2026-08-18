@@ -16,10 +16,14 @@ enum AppColor {
 /// 흰 배경 위에 일정 간격의 모눈을 그립니다.
 struct GridBackground: View {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let spacing: CGFloat = 30
 		static let lineWidth: CGFloat = 1
 	}
+
+	// MARK: - Body
 
 	var body: some View {
 		Color.white

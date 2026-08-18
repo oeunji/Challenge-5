@@ -9,11 +9,15 @@ import SwiftUI
 
 struct OnboardingFirstView: View {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let titleLineCount = 5
 		static let minimumLineOpacity: Double = 0.35
 		static let opacityStep: Double = 0.12
 	}
+
+	// MARK: - Properties
 
 	/// 탭할 때마다 순서대로 바뀌는 "빨강"들. 한 바퀴를 돌면 온보딩이 끝납니다.
 	private static let backgrounds: [Color] = [
@@ -25,8 +29,9 @@ struct OnboardingFirstView: View {
 	]
 
 	@Binding var didFinish: Bool
-
 	@State private var backgroundIndex = 0
+
+	// MARK: - Body
 
 	var body: some View {
 		ZStack {
@@ -64,6 +69,8 @@ struct OnboardingFirstView: View {
 		}
 	}
 
+	// MARK: - Subviews
+
 	private func answerButton(_ title: String) -> some View {
 		Button {
 			answerDidTap()
@@ -75,9 +82,13 @@ struct OnboardingFirstView: View {
 		.buttonStyle(GlassButtonStyle())
 	}
 
+	// MARK: - Methods
+
 	private func opacity(forLine line: Int) -> Double {
 		max(Metric.minimumLineOpacity, 0.95 - Double(line) * Metric.opacityStep)
 	}
+
+	// MARK: - Actions
 
 	/// Yes/No 어느 쪽을 눌러도 다음 빨강으로 넘어갑니다 — 정답이 없다는 게 요점입니다.
 	private func answerDidTap() {
@@ -97,9 +108,13 @@ struct OnboardingFirstView: View {
 
 struct GlassButtonStyle: ButtonStyle {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let cornerRadius: CGFloat = 16
 	}
+
+	// MARK: - Body
 
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label

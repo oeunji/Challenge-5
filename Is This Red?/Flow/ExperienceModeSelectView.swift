@@ -9,11 +9,15 @@ import SwiftUI
 
 struct ExperienceModeSelectView: View {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let cornerRadius: CGFloat = 24
 		static let buttonWidth: CGFloat = 400
 		static let buttonMinHeight: CGFloat = 64
 	}
+
+	// MARK: - Body
 
 	var body: some View {
 		NavigationStack {
@@ -62,6 +66,8 @@ struct ExperienceModeSelectView: View {
 			}
 		}
 	}
+
+	// MARK: - Subviews
 
 	private func modeButton<Destination: View>(
 		title: String,

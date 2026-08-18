@@ -10,8 +10,12 @@ import PencilKit
 
 struct DrawingView: UIViewRepresentable {
 
+	// MARK: - Properties
+
 	let canvasView: PKCanvasView
 	var onDrawingChange: (() -> Void)?
+
+	// MARK: - UIViewRepresentable
 
 	func makeCoordinator() -> Coordinator {
 		Coordinator(onDrawingChange: onDrawingChange)
@@ -26,8 +30,15 @@ struct DrawingView: UIViewRepresentable {
 
 	func updateUIView(_ uiView: PKCanvasView, context: Context) {}
 
+	// MARK: - Coordinator
+
 	final class Coordinator: NSObject {
+
+		// MARK: - Properties
+
 		private let onDrawingChange: (() -> Void)?
+
+		// MARK: - Initialize
 
 		init(onDrawingChange: (() -> Void)?) {
 			self.onDrawingChange = onDrawingChange

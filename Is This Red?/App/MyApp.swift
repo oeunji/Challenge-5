@@ -7,6 +7,9 @@ import SwiftUI
 
 @main
 struct MyApp: App {
+
+	// MARK: - Body
+
 	var body: some Scene {
 		WindowGroup {
 			RootView()

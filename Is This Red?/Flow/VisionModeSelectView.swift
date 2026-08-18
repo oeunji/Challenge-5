@@ -7,6 +7,8 @@ import SwiftUI
 
 struct VisionModeSelectView: View {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let cardSpacing: CGFloat = 14
 		static let cornerRadius: CGFloat = 14
@@ -14,12 +16,16 @@ struct VisionModeSelectView: View {
 		static let cardMinHeight: CGFloat = 200
 	}
 
+	// MARK: - Properties
+
 	private static let modes: [(mode: VisionMode, subtitle: String)] = [
 		(.protanopia, "Reduced sensitivity to red."),
 		(.deuteranopia, "Reduced sensitivity to green."),
 		(.tritanopia, "Reduced sensitivity to blue."),
 		(.achromatopsia, "No color perception.")
 	]
+
+	// MARK: - Body
 
 	var body: some View {
 		ZStack {
@@ -47,6 +53,8 @@ struct VisionModeSelectView: View {
 			}
 		}
 	}
+
+	// MARK: - Subviews
 
 	private func modeCard(_ item: (mode: VisionMode, subtitle: String)) -> some View {
 		NavigationLink(destination: ColorblindDrawView(selectedMode: item.mode)) {

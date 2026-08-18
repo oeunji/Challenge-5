@@ -9,6 +9,8 @@ import PencilKit
 /// 두 그리기 화면이 공유하는 도구 상태. 값이 바뀌면 `apply(to:)`로 캔버스에 반영합니다.
 struct DrawingTool: Equatable {
 
+	// MARK: - Types
+
 	enum Kind: CaseIterable {
 		case pencil, pen, brush, eraser, lasso
 
@@ -36,7 +38,11 @@ struct DrawingTool: Equatable {
 		}
 	}
 
+	// MARK: - Constants
+
 	static let defaultPalette: [Color] = [.black, .red, .yellow, .green, .blue, .purple]
+
+	// MARK: - Properties
 
 	var kind: Kind = .pen
 	var color: Color = .black
@@ -46,6 +52,8 @@ struct DrawingTool: Equatable {
 		get { widths[kind] ?? 5 }
 		set { widths[kind] = newValue }
 	}
+
+	// MARK: - Methods
 
 	func apply(to canvasView: PKCanvasView) {
 		switch kind {
@@ -73,6 +81,8 @@ struct DrawingTool: Equatable {
 
 struct DrawingToolbar: View {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let itemSpacing: CGFloat = 15
 		static let dividerHeight: CGFloat = 20
@@ -81,11 +91,15 @@ struct DrawingToolbar: View {
 		static let selectedSwatchSize: CGFloat = 24
 	}
 
+	// MARK: - Properties
+
 	@Binding var tool: DrawingTool
 	let canvasView: PKCanvasView
 	var palette: [Color] = DrawingTool.defaultPalette
 	/// 팔레트 스와치를 이 모드로 왜곡해 보여줍니다. `.normal`이면 실제 색 그대로.
 	var simulationMode: VisionMode = .normal
+
+	// MARK: - Body
 
 	var body: some View {
 		HStack(spacing: Metric.itemSpacing) {
@@ -132,6 +146,8 @@ struct DrawingToolbar: View {
 		.onAppear { tool.apply(to: canvasView) }
 		.onChange(of: tool) { tool.apply(to: canvasView) }
 	}
+
+	// MARK: - Subviews
 
 	private var divider: some View {
 		Divider().frame(height: Metric.dividerHeight)

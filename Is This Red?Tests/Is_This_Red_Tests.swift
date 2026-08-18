@@ -11,7 +11,11 @@ import SwiftUI
 
 struct Is_This_Red_Tests {
 
+	// MARK: - Properties
+
 	private let pureRed = Color(red: 1, green: 0, blue: 0)
+
+	// MARK: - Tests
 
 	@Test func normalModeKeepsColorUnchanged() {
 		#expect(VisionSimulator.simulate(color: pureRed, mode: .normal) == pureRed)
@@ -34,6 +38,8 @@ struct Is_This_Red_Tests {
 		#expect(abs(green - 0.558) < 0.001)
 		#expect(blue == 0)
 	}
+
+	// MARK: - Helpers
 
 	private func components(of mode: VisionMode) -> (Double, Double, Double) {
 		var (red, green, blue, alpha): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)

@@ -9,8 +9,12 @@ import SwiftUI
 
 struct RootView: View {
 
+	// MARK: - Properties
+
 	@State private var didFinishFirst = false
 	@State private var didFinishOnboarding = false
+
+	// MARK: - Body
 
 	var body: some View {
 		if didFinishOnboarding {

@@ -10,9 +10,13 @@ import PencilKit
 
 struct CreateView: View {
 
+	// MARK: - Properties
+
 	@State private var canvasView = PKCanvasView()
 	@State private var tool = DrawingTool()
 	@Environment(\.dismiss) private var dismiss
+
+	// MARK: - Body
 
 	var body: some View {
 		DrawingView(canvasView: canvasView)
@@ -36,6 +40,8 @@ struct CreateView: View {
 				}
 			}
 	}
+
+	// MARK: - Subviews
 
 	private var nextLink: some View {
 		NavigationLink {

@@ -10,12 +10,16 @@ import PencilKit
 
 struct VisionSimView: View {
 
+	// MARK: - Constants
+
 	private enum Metric {
 		static let spacing: CGFloat = 16
 		static let horizontalPadding: CGFloat = 16
 		static let emptyDrawingSide: CGFloat = 1024
 		static let drawingPadding: CGFloat = 24
 	}
+
+	// MARK: - Properties
 
 	let canvasView: PKCanvasView
 	var onFinish: (() -> Void)?
@@ -24,6 +28,8 @@ struct VisionSimView: View {
 	@State private var selectedMode: VisionMode = .protanopia
 	@State private var normalImage = UIImage()
 	@State private var simulatedImage = UIImage()
+
+	// MARK: - Body
 
 	var body: some View {
 		VStack {
@@ -71,6 +77,8 @@ struct VisionSimView: View {
 		}
 	}
 
+	// MARK: - Subviews
+
 	private func preview(title: String, image: UIImage, side: CGFloat) -> some View {
 		VStack {
 			Text(title)
@@ -82,6 +90,8 @@ struct VisionSimView: View {
 				.border(Color.gray.opacity(0.3))
 		}
 	}
+
+	// MARK: - Computed Values
 
 	/// 그림이 비어 있으면 정사각형 기본 영역을, 아니면 여백을 둔 그림 영역을 렌더링합니다.
 	private var drawingRect: CGRect {
@@ -96,6 +106,8 @@ struct VisionSimView: View {
 		}
 		return bounds.insetBy(dx: -Metric.drawingPadding, dy: -Metric.drawingPadding)
 	}
+
+	// MARK: - Methods
 
 	private func updateImages() {
 		normalImage = VisionSimulator.render(drawing: canvasView.drawing, rect: drawingRect)
