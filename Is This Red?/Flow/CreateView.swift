@@ -19,7 +19,7 @@ struct CreateView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            DrawingView(canvasView: $canvasView)
+            DrawingView(canvasView: canvasView)
                 .ignoresSafeArea(edges: .bottom)
         }
         .safeAreaInset(edge: .bottom) {
@@ -37,7 +37,7 @@ struct CreateView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    VisionSimView(canvasView: $canvasView, onFinish: { dismiss() })
+                    VisionSimView(canvasView: canvasView, onFinish: { dismiss() })
                 } label: {
                     Text("Next")
                         .font(.system(size: 16, weight: .semibold, design: .rounded))

@@ -96,7 +96,7 @@ struct ColorblindDrawView: View {
                             .allowsHitTesting(false)
                     }
 
-                    DrawingView(canvasView: $canvasView) {
+                    DrawingView(canvasView: canvasView) {
                         renderAndSimulate()
                     }
                         .opacity(drawingOpacity)

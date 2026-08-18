@@ -1,6 +1,6 @@
 //
 //  VisionSimView.swift
-//  Swift-Student-Challenge
+//  Is This Red?
 //
 //  Created by 이은지 on 2/23/26.
 //
@@ -9,101 +9,96 @@ import SwiftUI
 import PencilKit
 
 struct VisionSimView: View {
-    
-    @Binding var canvasView: PKCanvasView
-    @Environment(\.dismiss) private var dismiss
-    var onFinish: (() -> Void)? = nil
-    
-    @State private var selectedMode: VisionMode = .protanopia
-    @State private var simulatedImage: UIImage?
-    @State private var renderRect: CGRect = .zero
 
-    var body: some View {
-        VStack {
-            
-            Picker("Mode", selection: $selectedMode) {
-                ForEach(VisionMode.allCases.filter { $0 != .normal }, id: \.self) { mode in
-                    Text(mode.rawValue).tag(mode)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding()
-            .onChange(of: selectedMode) { _ in
-                updateSimulation(rect: renderRect)
-            }
-            
-            Divider()
-            
-            GeometryReader { geo in
-                let availableWidth = geo.size.width - 32 - 16
-                let imageSide = max(0, availableWidth / 2)
-                HStack(spacing: 16) {
-                    VStack {
-                        Text("Normal")
-                            .font(.caption)
-                        Image(uiImage: renderOriginal(rect: renderRect))
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: imageSide, height: imageSide)
-                            .border(Color.gray.opacity(0.3))
-                    }
-                    
-                    VStack {
-                        Text(selectedMode.rawValue)
-                            .font(.caption)
-                        if let simulatedImage {
-                            Image(uiImage: simulatedImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: imageSide, height: imageSide)
-                                .border(Color.gray.opacity(0.3))
-                        }
-                    }
-                }
-                .padding(.horizontal, 16)
-            }
-            
-            Spacer()
-        }
-        .navigationTitle("See Through Their Eyes")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            updateRenderRect()
-            updateSimulation(rect: renderRect)
-        }
-        .onChange(of: canvasView.drawing) { _ in
-            updateRenderRect()
-            updateSimulation(rect: renderRect)
-        }
-        Button("Finish Your Experience") {
-            dismiss()
-            if let onFinish {
-                DispatchQueue.main.async {
-                    onFinish()
-                }
-            }
-        }
-        .padding()
-        .foregroundColor(.black)
-    }
-    
-    private func renderOriginal(rect: CGRect) -> UIImage {
-        VisionSimulator.render(drawing: canvasView.drawing, rect: rect)
-    }
+	private enum Metric {
+		static let spacing: CGFloat = 16
+		static let horizontalPadding: CGFloat = 16
+		static let emptyDrawingSide: CGFloat = 1024
+		static let drawingPadding: CGFloat = 24
+	}
 
-    private func updateSimulation(rect: CGRect) {
-        let original = VisionSimulator.render(drawing: canvasView.drawing, rect: rect)
-        simulatedImage = VisionSimulator.simulate(image: original, mode: selectedMode)
-    }
+	let canvasView: PKCanvasView
+	var onFinish: (() -> Void)?
 
-    private func updateRenderRect() {
-        let bounds = canvasView.drawing.bounds
-        if bounds.isEmpty {
-            renderRect = CGRect(origin: .zero, size: CGSize(width: 1024, height: 1024))
-            return
-        }
+	@Environment(\.dismiss) private var dismiss
+	@State private var selectedMode: VisionMode = .protanopia
+	@State private var normalImage = UIImage()
+	@State private var simulatedImage = UIImage()
 
-        let padding: CGFloat = 24
-        renderRect = bounds.insetBy(dx: -padding, dy: -padding)
-    }
+	var body: some View {
+		VStack {
+			Picker("Mode", selection: $selectedMode) {
+				ForEach(VisionMode.allCases.filter { $0 != .normal }, id: \.self) { mode in
+					Text(mode.rawValue).tag(mode)
+				}
+			}
+			.pickerStyle(.segmented)
+			.padding()
+
+			Divider()
+
+			GeometryReader { geo in
+				let available = geo.size.width - Metric.horizontalPadding * 2 - Metric.spacing
+				HStack(spacing: Metric.spacing) {
+					preview(title: "Normal", image: normalImage, side: max(0, available / 2))
+					preview(
+						title: selectedMode.rawValue,
+						image: simulatedImage,
+						side: max(0, available / 2)
+					)
+				}
+				.padding(.horizontal, Metric.horizontalPadding)
+			}
+
+			Spacer()
+
+			Button("Finish Your Experience") {
+				dismiss()
+				DispatchQueue.main.async {
+					onFinish?()
+				}
+			}
+			.padding()
+			.foregroundColor(.black)
+		}
+		.navigationTitle("See Through Their Eyes")
+		.navigationBarTitleDisplayMode(.inline)
+		.onAppear {
+			updateImages()
+		}
+		.onChange(of: selectedMode) {
+			updateImages()
+		}
+	}
+
+	private func preview(title: String, image: UIImage, side: CGFloat) -> some View {
+		VStack {
+			Text(title)
+				.font(.caption)
+			Image(uiImage: image)
+				.resizable()
+				.scaledToFit()
+				.frame(width: side, height: side)
+				.border(Color.gray.opacity(0.3))
+		}
+	}
+
+	/// 그림이 비어 있으면 정사각형 기본 영역을, 아니면 여백을 둔 그림 영역을 렌더링합니다.
+	private var drawingRect: CGRect {
+		let bounds = canvasView.drawing.bounds
+		guard !bounds.isEmpty else {
+			return CGRect(
+				x: 0,
+				y: 0,
+				width: Metric.emptyDrawingSide,
+				height: Metric.emptyDrawingSide
+			)
+		}
+		return bounds.insetBy(dx: -Metric.drawingPadding, dy: -Metric.drawingPadding)
+	}
+
+	private func updateImages() {
+		normalImage = VisionSimulator.render(drawing: canvasView.drawing, rect: drawingRect)
+		simulatedImage = VisionSimulator.simulate(image: normalImage, mode: selectedMode)
+	}
 }
