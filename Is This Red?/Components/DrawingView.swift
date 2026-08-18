@@ -17,8 +17,8 @@ struct DrawingView: UIViewRepresentable {
 
 	// MARK: - UIViewRepresentable
 
-	func makeCoordinator() -> Coordinator {
-		Coordinator(onDrawingChange: onDrawingChange)
+	func makeCoordinator() -> DrawingViewDelegate {
+		DrawingViewDelegate(onDrawingChange: onDrawingChange)
 	}
 
 	func makeUIView(context: Context) -> PKCanvasView {
@@ -29,28 +29,4 @@ struct DrawingView: UIViewRepresentable {
 	}
 
 	func updateUIView(_ uiView: PKCanvasView, context: Context) {}
-
-	// MARK: - Coordinator
-
-	final class Coordinator: NSObject {
-
-		// MARK: - Properties
-
-		private let onDrawingChange: (() -> Void)?
-
-		// MARK: - Initialize
-
-		init(onDrawingChange: (() -> Void)?) {
-			self.onDrawingChange = onDrawingChange
-		}
-	}
-}
-
-// MARK: - PKCanvasViewDelegate
-
-extension DrawingView.Coordinator: PKCanvasViewDelegate {
-
-	func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-		onDrawingChange?()
-	}
 }
