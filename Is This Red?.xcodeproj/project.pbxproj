@@ -6,6 +6,9 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		EC67B2F1302C089A006E2EF8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EC129C5C302E977500A71F4C /* CLAUDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CLAUDE.md; sourceTree = "<group>"; };
+		EC129C5E302E979100A71F4C /* architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = architecture.md; sourceTree = "<group>"; };
 		EC67B2E3302C089A006E2EF8 /* Is This Red?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Is This Red?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC67B2F0302C089A006E2EF8 /* Is This Red?Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Is This Red?Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC67B2FA302C089A006E2EF8 /* Is This Red?UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Is This Red?UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,9 +77,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC129C5F302E979100A71F4C /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				EC129C5E302E979100A71F4C /* architecture.md */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
 		EC67B2DA302C0899006E2EF8 = {
 			isa = PBXGroup;
 			children = (
+				EC129C5C302E977500A71F4C /* CLAUDE.md */,
+				EC129C5F302E979100A71F4C /* docs */,
 				EC67B2E5302C089A006E2EF8 /* Is This Red? */,
 				EC67B2F3302C089A006E2EF8 /* Is This Red?Tests */,
 				EC67B2FD302C089A006E2EF8 /* Is This Red?UITests */,
