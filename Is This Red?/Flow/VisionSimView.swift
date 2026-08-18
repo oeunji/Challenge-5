@@ -17,9 +17,7 @@ struct VisionSimView: View {
     @State private var selectedMode: VisionMode = .protanopia
     @State private var simulatedImage: UIImage?
     @State private var renderRect: CGRect = .zero
-    
-    private let simulationService = VisionSimulationService()
-    
+
     var body: some View {
         VStack {
             
@@ -90,12 +88,12 @@ struct VisionSimView: View {
     }
     
     private func renderOriginal(rect: CGRect) -> UIImage {
-        simulationService.render(drawing: canvasView.drawing, rect: rect)
+        VisionSimulator.render(drawing: canvasView.drawing, rect: rect)
     }
-    
+
     private func updateSimulation(rect: CGRect) {
-        let original = simulationService.render(drawing: canvasView.drawing, rect: rect)
-        simulatedImage = simulationService.simulate(image: original, mode: selectedMode)
+        let original = VisionSimulator.render(drawing: canvasView.drawing, rect: rect)
+        simulatedImage = VisionSimulator.simulate(image: original, mode: selectedMode)
     }
 
     private func updateRenderRect() {

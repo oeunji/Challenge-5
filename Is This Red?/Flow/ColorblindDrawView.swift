@@ -28,8 +28,6 @@ struct ColorblindDrawView: View {
     @State private var eraserMode: PKEraserTool.EraserType = .vector
     @State private var missionText: String
 
-    private let simulationService = VisionSimulationService()
-
     enum ToolType {
         case pencil, pen, brush, eraser, lasso
     }
@@ -207,7 +205,7 @@ struct ColorblindDrawView: View {
 
             ForEach(palette.indices, id: \.self) { index in
                 let color = palette[index]
-                let displayColor = simulatedColor(color, mode: effectiveMode)
+                let displayColor = VisionSimulator.simulate(color: color, mode: effectiveMode)
                 Button {
                     activeColor = color
                     if isInkingTool(activeTool) {
@@ -351,47 +349,11 @@ struct ColorblindDrawView: View {
 
     private func renderAndSimulate() {
         let size = renderSize == .zero ? CGSize(width: 1024, height: 1024) : renderSize
-        let original = simulationService.render(drawing: canvasView.drawing, size: size)
+        let original = VisionSimulator.render(
+            drawing: canvasView.drawing,
+            rect: CGRect(origin: .zero, size: size)
+        )
         normalImage = original
-        simulatedImage = simulationService.simulate(image: original, mode: selectedMode)
-    }
-
-    private func simulatedColor(_ color: Color, mode: VisionMode) -> Color {
-        guard mode != .normal else { return color }
-        let ui = UIColor(color)
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        ui.getRed(&r, green: &g, blue: &b, alpha: &a)
-        let (rr, gg, bb) = applyMatrix(r: r, g: g, b: b, mode: mode)
-        return Color(red: rr, green: gg, blue: bb, opacity: Double(a))
-    }
-
-    private func applyMatrix(r: CGFloat, g: CGFloat, b: CGFloat, mode: VisionMode) -> (Double, Double, Double) {
-        let (rv, gv, bv) = matrix(for: mode)
-        let nr = rv.0 * Double(r) + rv.1 * Double(g) + rv.2 * Double(b)
-        let ng = gv.0 * Double(r) + gv.1 * Double(g) + gv.2 * Double(b)
-        let nb = bv.0 * Double(r) + bv.1 * Double(g) + bv.2 * Double(b)
-        return (clamp(nr), clamp(ng), clamp(nb))
-    }
-
-    private func matrix(for mode: VisionMode) -> ((Double, Double, Double), (Double, Double, Double), (Double, Double, Double)) {
-        switch mode {
-        case .protanopia:
-            return ((0.567, 0.433, 0.0), (0.558, 0.442, 0.0), (0.0, 0.242, 0.758))
-        case .deuteranopia:
-            return ((0.625, 0.375, 0.0), (0.7, 0.3, 0.0), (0.0, 0.3, 0.7))
-        case .tritanopia:
-            return ((0.95, 0.05, 0.0), (0.0, 0.433, 0.567), (0.0, 0.475, 0.525))
-        case .achromatopsia:
-            return ((0.299, 0.587, 0.114), (0.299, 0.587, 0.114), (0.299, 0.587, 0.114))
-        case .normal:
-            return ((1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0))
-        }
-    }
-
-    private func clamp(_ value: Double) -> Double {
-        min(max(value, 0.0), 1.0)
+        simulatedImage = VisionSimulator.simulate(image: original, mode: selectedMode)
     }
 }
