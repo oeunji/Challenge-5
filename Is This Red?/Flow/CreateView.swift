@@ -2,6 +2,8 @@
 //  CreateView.swift
 //  Is This Red?
 //
+//  Created by 이은지 on 2/25/26.
+//
 
 import SwiftUI
 import PencilKit
@@ -25,8 +27,6 @@ struct CreateView: View {
 					.padding(.vertical, 12)
 					.background(.thinMaterial)
 			}
-			.navigationTitle("Bio_DNA")
-			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem(placement: .topBarTrailing) {
 					nextLink
