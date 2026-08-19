@@ -84,7 +84,7 @@ final class DrawingSession {
 		case fixed(CGSize)
 	}
 
-	let canvas = PKCanvasView()
+	var drawing = PKDrawing()
 	private(set) var normalImage: UIImage?
 	private(set) var simulatedImage: UIImage?
 
@@ -110,6 +110,19 @@ final class DrawingSession {
 `rect(for:)`는 순수 함수이므로 이 규칙이 테스트 대상이 된다.
 
 `render(_:mode:)`는 원본과 시뮬레이션 이미지를 만들어 저장하기만 한다. 둘 중 무엇을 보여줄지(reveal 토글)는 표시 결정이므로 뷰에 남는다.
+
+#### 캔버스 뷰는 세션에 두지 않는다
+
+세션이 소유하는 것은 값 타입인 `PKDrawing`이고, `PKCanvasView`는 각 화면이 `@State`로 소유한다.
+
+처음에는 세션이 `PKCanvasView`를 들도록 만들었다가 되돌렸다. `UIViewRepresentable`은 자기 `UIView`를 소유해야 한다. 앱 수명을 갖는 객체가 만든 뷰를 `makeUIView`가 반환하면, `navigationDestination`이 목적지 뷰를 다시 만들 때 같은 `UIView`가 재호스팅되어 제스처 인식기의 responder 관계가 끊긴다. 증상은 획을 긋는 순간의 크래시였다.
+
+```
+*** -[__NSArrayM insertObject:atIndex:]: object cannot be nil
+    -[UIGestureRecognizer _delayTouchesForEvent:inPhase:]
+```
+
+화면이 그림을 바꾸면 `DrawingView`의 `onDrawingChange`에서 `session.drawing`에 옮겨 담는다. 화면 사이를 건너는 것은 값뿐이다.
 
 #### 인스턴스는 둘, 타입은 하나
 

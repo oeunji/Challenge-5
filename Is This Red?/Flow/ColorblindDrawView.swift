@@ -41,6 +41,7 @@ struct ColorblindDrawView: View {
 	let selectedMode: VisionMode
 
 	@State private var session = DrawingSession()
+	@State private var canvasView = PKCanvasView()
 	@State private var tool = DrawingTool()
 	@State private var palette = [Color.black] + DrawingTool.defaultPalette.dropFirst().shuffled()
 	@State private var missionText = Self.missions.randomElement() ?? ""
@@ -55,7 +56,7 @@ struct ColorblindDrawView: View {
 		VStack(spacing: Metric.stackSpacing) {
 			DrawingToolbar(
 				tool: $tool,
-				canvasView: session.canvas,
+				canvasView: canvasView,
 				palette: palette,
 				simulationMode: effectiveMode
 			)
@@ -94,7 +95,7 @@ struct ColorblindDrawView: View {
 						.allowsHitTesting(false)
 				}
 
-				DrawingView(canvasView: session.canvas) {
+				DrawingView(canvasView: canvasView) {
 					renderAndSimulate()
 				}
 				.opacity(Metric.canvasOpacity)
@@ -180,6 +181,7 @@ struct ColorblindDrawView: View {
 	// MARK: - Methods
 
 	private func renderAndSimulate() {
+		session.drawing = canvasView.drawing
 		session.render(.fixed(renderSize), mode: selectedMode)
 	}
 }

@@ -25,8 +25,8 @@ struct DrawingSessionTests {
 	@Test("그림이 있으면 경계 바깥으로 여백만큼 넓힌다")
 	func drawingBoundsGetPadding() {
 		let session = DrawingSession()
-		session.canvas.drawing = strokedDrawing()
-		let bounds = session.canvas.drawing.bounds
+		session.drawing = strokedDrawing()
+		let bounds = session.drawing.bounds
 
 		let rect = session.rect(for: .fittingDrawing(padding: 24))
 

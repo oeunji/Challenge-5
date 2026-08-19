@@ -6,8 +6,12 @@
 import SwiftUI
 import PencilKit
 
-/// 캔버스 하나와 그것을 렌더한 결과를 들고 있습니다.
+/// 그림 데이터와 그것을 렌더한 결과를 들고 있습니다.
 /// 자유 드로잉과 미션 드로잉은 별개의 그림이므로 인스턴스를 따로 만들어 씁니다.
+///
+/// 캔버스 뷰(`PKCanvasView`)는 여기 두지 않습니다. `UIViewRepresentable`은 자기 `UIView`를
+/// 소유해야 하고, 앱 수명을 갖는 객체가 만든 뷰를 넘기면 화면이 다시 만들어질 때 같은 뷰가
+/// 재호스팅되어 터치 전달이 깨집니다. 화면 사이를 건너는 것은 값 타입인 `PKDrawing`입니다.
 @Observable
 final class DrawingSession {
 
@@ -29,7 +33,7 @@ final class DrawingSession {
 
 	// MARK: - Properties
 
-	let canvas = PKCanvasView()
+	var drawing = PKDrawing()
 	private(set) var normalImage: UIImage?
 	private(set) var simulatedImage: UIImage?
 
@@ -44,7 +48,7 @@ final class DrawingSession {
 	func rect(for framing: Framing) -> CGRect {
 		switch framing {
 		case .fittingDrawing(let padding):
-			let bounds = canvas.drawing.bounds
+			let bounds = drawing.bounds
 			guard !bounds.isEmpty else { return fallbackRect }
 			return bounds.insetBy(dx: -padding, dy: -padding)
 		case .fixed(let size):
@@ -54,7 +58,7 @@ final class DrawingSession {
 	}
 
 	func render(_ framing: Framing, mode: VisionMode) {
-		let image = VisionSimulator.render(drawing: canvas.drawing, rect: rect(for: framing))
+		let image = VisionSimulator.render(drawing: drawing, rect: rect(for: framing))
 		normalImage = image
 		simulatedImage = VisionSimulator.simulate(image: image, mode: mode)
 	}
