@@ -98,7 +98,16 @@ final class DrawingSession {
 - `VisionSimView` — `.fittingDrawing(padding: 24)`. 그림 경계에 여백을 두른 영역.
 - `ColorblindDrawView` — `.fixed(size)`. `GeometryReader`가 준 캔버스 크기 그대로.
 
-두 경우 모두 그림이 비어 있으면 1024×1024 정사각형으로 대체한다. `rect(for:)`는 순수 함수이므로 이 규칙이 테스트 대상이 된다.
+대체 규칙은 두 방식이 서로 다르다. 현재 두 화면의 동작을 그대로 옮긴 것이다.
+
+| Framing | 대체 조건 | 대체값 |
+| --- | --- | --- |
+| `.fittingDrawing(padding:)` | 그림이 비어 있을 때 | 1024×1024 |
+| `.fixed(size)` | `size`가 `.zero`일 때 | 1024×1024 |
+
+`.fixed`는 그림이 비어 있어도 대체하지 않는다. `ColorblindDrawView`는 캔버스 크기가 정해지기 전에만 대체가 필요하기 때문이다.
+
+`rect(for:)`는 순수 함수이므로 이 규칙이 테스트 대상이 된다.
 
 `render(_:mode:)`는 원본과 시뮬레이션 이미지를 만들어 저장하기만 한다. 둘 중 무엇을 보여줄지(reveal 토글)는 표시 결정이므로 뷰에 남는다.
 
@@ -185,19 +194,20 @@ struct RootView: View {
 
 ## 테스트 계획
 
-기존 3개에 7개를 더해 10개가 된다. 신규 7개는 모두 SwiftUI 뷰 없이 실행된다.
+기존 3개에 8개를 더해 11개가 된다. 신규 8개는 모두 SwiftUI 뷰 없이 실행된다.
 
 ```
 AppCoordinatorTests
-  온보딩을_두_번_지나면_체험_단계로()
-  체험_단계에서_더_진행해도_단계가_유지된다()
-  push하면_경로에_목적지가_쌓인다()
-  popToRoot는_경로를_비운다()
+  온보딩을 두 번 지나면 체험 단계가 된다
+  체험 단계에서 더 진행해도 단계가 유지된다
+  push하면 경로에 목적지가 순서대로 쌓인다
+  popToRoot는 경로를 비운다
 
 DrawingSessionTests
-  빈_그림에_fittingDrawing이면_기본_정사각형()
-  그림이_있으면_경계에_여백이_더해진다()
-  fixed는_주어진_크기를_그대로_쓴다()
+  그림이 비어 있으면 fittingDrawing은 기본 정사각형을 쓴다
+  그림이 있으면 경계 바깥으로 여백만큼 넓힌다
+  fixed는 주어진 크기를 원점에 그대로 쓴다
+  fixed에 0 크기가 오면 기본 정사각형으로 대체한다
 ```
 
 `AppCoordinator` 테스트는 UIKit·SwiftUI 어느 것도 필요 없다. `DrawingSession.rect(for:)` 테스트는 빈 `PKDrawing()`만 있으면 된다.
@@ -209,14 +219,16 @@ DrawingSessionTests
 각 단계마다 빌드와 전체 테스트가 통과하는 커밋을 남긴다. 어느 단계가 과했는지 되돌릴 수 있어야 한다.
 
 1. `AppCoordinator` + 테스트 4개. 아직 아무도 쓰지 않는다.
-2. `DrawingSession` + 테스트 3개. 아직 아무도 쓰지 않는다.
+2. `DrawingSession` + 테스트 4개. 아직 아무도 쓰지 않는다.
 3. `MyApp` 주입, `RootView`를 `stage` 분기로 교체, 온보딩 두 화면 배선. bool 2개 삭제.
-4. `NavigationStack`을 `RootView`로 이전, `navigationDestination` 추가. 기존 `NavigationLink`는 아직 그대로 둔다.
-5. 각 화면의 `NavigationLink`를 `push`로 교체. 이 단계가 끝나면 앱에 `NavigationLink(destination:)`이 남지 않는다.
-6. `CreateView`, `VisionSimView`를 세션으로. `onFinish`·`dismiss` 우회 제거.
-7. `ColorblindDrawView`를 세션으로.
+4. `CreateView`, `VisionSimView`를 세션으로.
+5. `ColorblindDrawView`를 세션으로.
+6. `NavigationStack`을 `RootView`로 이전, `navigationDestination` 추가. 기존 `NavigationLink`는 아직 그대로 둔다.
+7. 각 화면의 `NavigationLink`를 `push`로 교체. `onFinish`·`dismiss` 우회 제거. 이 단계가 끝나면 앱에 `NavigationLink(destination:)`이 남지 않는다.
 
-3~5단계 사이에는 두 전환 방식이 잠시 공존한다. 5단계에서 정리된다.
+**세션 전환(4~5)이 라우팅(6~7)보다 앞선다.** 6단계의 `navigationDestination`은 `VisionSimView()`를 인자 없이 만들어야 하는데, 세션 전환 전에는 `canvasView:` 인자가 필수라 컴파일되지 않는다.
+
+4~6단계 사이에는 두 전환 방식이 잠시 공존하고, `VisionSimView`의 "Finish"가 모드 선택이 아니라 `CreateView`로만 돌아간다. 7단계에서 정리된다.
 
 ## 기각한 대안
 
