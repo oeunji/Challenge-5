@@ -18,7 +18,6 @@ struct ColorblindDrawView: View {
 		static let cardPadding: CGFloat = 12
 		/// 캔버스는 거의 투명하게 두고, 그 아래 시뮬레이션된 이미지를 대신 보여줍니다.
 		static let canvasOpacity: Double = 0.02
-		static let fallbackCanvasSide: CGFloat = 1024
 	}
 
 	// MARK: - Types
@@ -41,12 +40,10 @@ struct ColorblindDrawView: View {
 
 	let selectedMode: VisionMode
 
-	@State private var canvasView = PKCanvasView()
+	@State private var session = DrawingSession()
 	@State private var tool = DrawingTool()
 	@State private var palette = [Color.black] + DrawingTool.defaultPalette.dropFirst().shuffled()
 	@State private var missionText = Self.missions.randomElement() ?? ""
-	@State private var normalImage: UIImage?
-	@State private var simulatedImage: UIImage?
 	@State private var renderSize: CGSize = .zero
 	@State private var isRevealActive = false
 	@State private var revealSelection: RevealSelection = .simulated
@@ -58,7 +55,7 @@ struct ColorblindDrawView: View {
 		VStack(spacing: Metric.stackSpacing) {
 			DrawingToolbar(
 				tool: $tool,
-				canvasView: canvasView,
+				canvasView: session.canvas,
 				palette: palette,
 				simulationMode: effectiveMode
 			)
@@ -97,7 +94,7 @@ struct ColorblindDrawView: View {
 						.allowsHitTesting(false)
 				}
 
-				DrawingView(canvasView: canvasView) {
+				DrawingView(canvasView: session.canvas) {
 					renderAndSimulate()
 				}
 				.opacity(Metric.canvasOpacity)
@@ -173,7 +170,7 @@ struct ColorblindDrawView: View {
 	}
 
 	private var displayedImage: UIImage? {
-		isShowingNormal ? normalImage : simulatedImage
+		isShowingNormal ? session.normalImage : session.simulatedImage
 	}
 
 	private var isShowingNormal: Bool {
@@ -183,11 +180,6 @@ struct ColorblindDrawView: View {
 	// MARK: - Methods
 
 	private func renderAndSimulate() {
-		let size = renderSize == .zero
-			? CGSize(width: Metric.fallbackCanvasSide, height: Metric.fallbackCanvasSide)
-			: renderSize
-		let rect = CGRect(origin: .zero, size: size)
-		normalImage = VisionSimulator.render(drawing: canvasView.drawing, rect: rect)
-		simulatedImage = VisionSimulator.simulate(image: normalImage ?? UIImage(), mode: selectedMode)
+		session.render(.fixed(renderSize), mode: selectedMode)
 	}
 }
