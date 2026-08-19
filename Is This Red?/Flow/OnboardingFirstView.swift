@@ -28,7 +28,7 @@ struct OnboardingFirstView: View {
 		Color(red: 1.0, green: 0.2275, blue: 0.1961)     // #FF3A32
 	]
 
-	@Binding var didFinish: Bool
+	@Environment(AppCoordinator.self) private var coordinator
 	@State private var backgroundIndex = 0
 
 	// MARK: - Body
@@ -100,7 +100,7 @@ struct OnboardingFirstView: View {
 
 		if nextIndex == 0 {
 			withAnimation(.easeInOut(duration: 0.35)) {
-				didFinish = true
+				coordinator.onboardingDidFinish()
 			}
 		}
 	}

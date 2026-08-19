@@ -11,18 +11,18 @@ struct RootView: View {
 
 	// MARK: - Properties
 
-	@State private var didFinishFirst = false
-	@State private var didFinishOnboarding = false
+	@Environment(AppCoordinator.self) private var coordinator
 
 	// MARK: - Body
 
 	var body: some View {
-		if didFinishOnboarding {
+		switch coordinator.stage {
+		case .onboardingFirst:
+			OnboardingFirstView()
+		case .onboardingSecond:
+			OnboardingSecondView()
+		case .experience:
 			ExperienceModeSelectView()
-		} else if didFinishFirst {
-			OnboardingSecondView(didFinish: $didFinishOnboarding)
-		} else {
-			OnboardingFirstView(didFinish: $didFinishFirst)
 		}
 	}
 }
