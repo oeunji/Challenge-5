@@ -20,10 +20,8 @@ struct VisionSimView: View {
 
 	// MARK: - Properties
 
-	var onFinish: (() -> Void)?
-
+	@Environment(AppCoordinator.self) private var coordinator
 	@Environment(DrawingSession.self) private var session
-	@Environment(\.dismiss) private var dismiss
 	@State private var selectedMode: VisionMode = .protanopia
 
 	// MARK: - Body
@@ -56,10 +54,7 @@ struct VisionSimView: View {
 			Spacer()
 
 			Button("Finish Your Experience") {
-				dismiss()
-				DispatchQueue.main.async {
-					onFinish?()
-				}
+				coordinator.popToRoot()
 			}
 			.padding()
 			.foregroundColor(.black)

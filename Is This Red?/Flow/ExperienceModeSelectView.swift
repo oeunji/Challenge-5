@@ -17,6 +17,10 @@ struct ExperienceModeSelectView: View {
 		static let buttonMinHeight: CGFloat = 64
 	}
 
+	// MARK: - Properties
+
+	@Environment(AppCoordinator.self) private var coordinator
+
 	// MARK: - Body
 
 	var body: some View {
@@ -45,17 +49,15 @@ struct ExperienceModeSelectView: View {
 				HStack(spacing: 16) {
 					modeButton(
 						title: "See Through Their Eyes",
-						subtitle: "Simulate how your drawing looks to them"
-					) {
-						CreateView()
-					}
+						subtitle: "Simulate how your drawing looks to them",
+						route: .create
+					)
 
 					modeButton(
 						title: "Draw As Them",
-						subtitle: "Draw with color-vision limits"
-					) {
-						VisionModeSelectView()
-					}
+						subtitle: "Draw with color-vision limits",
+						route: .visionModeSelect
+					)
 				}
 				.padding(.horizontal, 32)
 				.padding(.vertical, 10)
@@ -67,12 +69,10 @@ struct ExperienceModeSelectView: View {
 
 	// MARK: - Subviews
 
-	private func modeButton<Destination: View>(
-		title: String,
-		subtitle: String,
-		destination: @escaping () -> Destination
-	) -> some View {
-		NavigationLink(destination: destination()) {
+	private func modeButton(title: String, subtitle: String, route: Route) -> some View {
+		Button {
+			coordinator.push(route)
+		} label: {
 			VStack(spacing: 6) {
 				Text(title)
 					.font(.system(size: 18, weight: .semibold))

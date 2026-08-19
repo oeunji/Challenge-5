@@ -18,6 +18,8 @@ struct VisionModeSelectView: View {
 
 	// MARK: - Properties
 
+	@Environment(AppCoordinator.self) private var coordinator
+
 	private static let modes: [(mode: VisionMode, subtitle: String)] = [
 		(.protanopia, "Reduced sensitivity to red."),
 		(.deuteranopia, "Reduced sensitivity to green."),
@@ -57,7 +59,9 @@ struct VisionModeSelectView: View {
 	// MARK: - Subviews
 
 	private func modeCard(_ item: (mode: VisionMode, subtitle: String)) -> some View {
-		NavigationLink(destination: ColorblindDrawView(selectedMode: item.mode)) {
+		Button {
+			coordinator.push(.colorblindDraw(item.mode))
+		} label: {
 			VStack(alignment: .center, spacing: 10) {
 				Text(item.mode.rawValue)
 					.font(.system(size: 24, weight: .semibold))

@@ -12,6 +12,7 @@ struct CreateView: View {
 
 	// MARK: - Properties
 
+	@Environment(AppCoordinator.self) private var coordinator
 	@Environment(DrawingSession.self) private var session
 	@State private var tool = DrawingTool()
 
@@ -32,7 +33,7 @@ struct CreateView: View {
 			}
 			.toolbar {
 				ToolbarItem(placement: .topBarTrailing) {
-					nextLink
+					nextButton
 				}
 				ToolbarItem(placement: .principal) {
 					DrawingToolbar(tool: $tool, canvasView: session.canvas)
@@ -42,9 +43,9 @@ struct CreateView: View {
 
 	// MARK: - Subviews
 
-	private var nextLink: some View {
-		NavigationLink {
-			VisionSimView()
+	private var nextButton: some View {
+		Button {
+			coordinator.push(.visionSim)
 		} label: {
 			Text("Next")
 				.font(.system(size: 16, weight: .semibold, design: .rounded))
