@@ -12,14 +12,13 @@ struct CreateView: View {
 
 	// MARK: - Properties
 
-	@State private var canvasView = PKCanvasView()
+	@Environment(DrawingSession.self) private var session
 	@State private var tool = DrawingTool()
-	@Environment(\.dismiss) private var dismiss
 
 	// MARK: - Body
 
 	var body: some View {
-		DrawingView(canvasView: canvasView)
+		DrawingView(canvasView: session.canvas)
 			.ignoresSafeArea(edges: .bottom)
 			.safeAreaInset(edge: .bottom) {
 				Text("Feel free to draw, and tap the Next button when you’re done.")
@@ -36,7 +35,7 @@ struct CreateView: View {
 					nextLink
 				}
 				ToolbarItem(placement: .principal) {
-					DrawingToolbar(tool: $tool, canvasView: canvasView)
+					DrawingToolbar(tool: $tool, canvasView: session.canvas)
 				}
 			}
 	}
@@ -45,7 +44,7 @@ struct CreateView: View {
 
 	private var nextLink: some View {
 		NavigationLink {
-			VisionSimView(canvasView: canvasView, onFinish: { dismiss() })
+			VisionSimView()
 		} label: {
 			Text("Next")
 				.font(.system(size: 16, weight: .semibold, design: .rounded))

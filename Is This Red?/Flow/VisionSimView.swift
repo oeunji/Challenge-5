@@ -15,19 +15,16 @@ struct VisionSimView: View {
 	private enum Metric {
 		static let spacing: CGFloat = 16
 		static let horizontalPadding: CGFloat = 16
-		static let emptyDrawingSide: CGFloat = 1024
 		static let drawingPadding: CGFloat = 24
 	}
 
 	// MARK: - Properties
 
-	let canvasView: PKCanvasView
 	var onFinish: (() -> Void)?
 
+	@Environment(DrawingSession.self) private var session
 	@Environment(\.dismiss) private var dismiss
 	@State private var selectedMode: VisionMode = .protanopia
-	@State private var normalImage = UIImage()
-	@State private var simulatedImage = UIImage()
 
 	// MARK: - Body
 
@@ -46,10 +43,10 @@ struct VisionSimView: View {
 			GeometryReader { geo in
 				let available = geo.size.width - Metric.horizontalPadding * 2 - Metric.spacing
 				HStack(spacing: Metric.spacing) {
-					preview(title: "Normal", image: normalImage, side: max(0, available / 2))
+					preview(title: "Normal", image: session.normalImage, side: max(0, available / 2))
 					preview(
 						title: selectedMode.rawValue,
-						image: simulatedImage,
+						image: session.simulatedImage,
 						side: max(0, available / 2)
 					)
 				}
@@ -79,38 +76,23 @@ struct VisionSimView: View {
 
 	// MARK: - Subviews
 
-	private func preview(title: String, image: UIImage, side: CGFloat) -> some View {
+	private func preview(title: String, image: UIImage?, side: CGFloat) -> some View {
 		VStack {
 			Text(title)
 				.font(.caption)
-			Image(uiImage: image)
-				.resizable()
-				.scaledToFit()
-				.frame(width: side, height: side)
-				.border(Color.gray.opacity(0.3))
+			if let image {
+				Image(uiImage: image)
+					.resizable()
+					.scaledToFit()
+					.frame(width: side, height: side)
+					.border(Color.gray.opacity(0.3))
+			}
 		}
-	}
-
-	// MARK: - Computed Values
-
-	/// 그림이 비어 있으면 정사각형 기본 영역을, 아니면 여백을 둔 그림 영역을 렌더링합니다.
-	private var drawingRect: CGRect {
-		let bounds = canvasView.drawing.bounds
-		guard !bounds.isEmpty else {
-			return CGRect(
-				x: 0,
-				y: 0,
-				width: Metric.emptyDrawingSide,
-				height: Metric.emptyDrawingSide
-			)
-		}
-		return bounds.insetBy(dx: -Metric.drawingPadding, dy: -Metric.drawingPadding)
 	}
 
 	// MARK: - Methods
 
 	private func updateImages() {
-		normalImage = VisionSimulator.render(drawing: canvasView.drawing, rect: drawingRect)
-		simulatedImage = VisionSimulator.simulate(image: normalImage, mode: selectedMode)
+		session.render(.fittingDrawing(padding: Metric.drawingPadding), mode: selectedMode)
 	}
 }
