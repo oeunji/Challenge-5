@@ -22,7 +22,34 @@ struct RootView: View {
 		case .onboardingSecond:
 			OnboardingSecondView()
 		case .experience:
+			experienceStack
+		}
+	}
+
+	// MARK: - Subviews
+
+	private var experienceStack: some View {
+		@Bindable var coordinator = coordinator
+
+		return NavigationStack(path: $coordinator.path) {
 			ExperienceModeSelectView()
+				.navigationDestination(for: Route.self) { route in
+					destination(for: route)
+				}
+		}
+	}
+
+	@ViewBuilder
+	private func destination(for route: Route) -> some View {
+		switch route {
+		case .create:
+			CreateView()
+		case .visionSim:
+			VisionSimView()
+		case .visionModeSelect:
+			VisionModeSelectView()
+		case .colorblindDraw(let mode):
+			ColorblindDrawView(selectedMode: mode)
 		}
 	}
 }
