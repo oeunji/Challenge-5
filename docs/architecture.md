@@ -17,12 +17,21 @@ From `ExperienceModeSelectView` (`Flow/`), the user picks one of two independent
 
 ## Simulation core
 
-`Services/VisionSimulationService.swift` holds the `VisionMode` enum and does two things:
-- Renders a `PKDrawing` to a `UIImage` (`render(drawing:size:)` / `render(drawing:rect:)`).
-- Applies a Core Image `CIFilter.colorMatrix` per vision mode to simulate color-deficient perception on a rendered image.
+`Services/VisionSimulationService.swift` holds the `VisionMode` enum and the `VisionSimulator` namespace (an `enum` of statics, so the `CIContext` is created once for the whole app):
 
-`ColorblindDrawView` additionally reimplements the same color-matrix math by hand (`applyMatrix`, `matrix(for:)`) to distort individual `Color` values for the palette swatches, since `CIFilter` only operates on images. When changing the color-matrix coefficients for a vision mode, update both `VisionSimulationService.simulate` and `ColorblindDrawView.matrix(for:)` — they must stay in sync.
+- `VisionMode.colorMatrix` is the **single source of truth** for the per-mode RGB coefficients. Change a mode's simulation here and nowhere else.
+- `render(drawing:rect:)` rasterizes a `PKDrawing` to a `UIImage`.
+- `simulate(image:mode:)` applies those coefficients through `CIFilter.colorMatrix`.
+- `simulate(color:mode:)` applies the same coefficients arithmetically to a single `Color`, for palette swatches — `CIFilter` only operates on images.
+
+`Is This Red?Tests` pins the matrix wiring (`normal` is identity, `achromatopsia` flattens to luminance, `protanopia` doesn't).
 
 ## Drawing
 
-`Components/DrawingView.swift` wraps `PKCanvasView` (`UIViewRepresentable`) with a delegate callback (`onDrawingChange`) used to trigger re-simulation on every stroke. Both `CreateView` and `ColorblindDrawView` duplicate their own toolbar (pencil/pen/brush/eraser/lasso, color palette, width slider) and tool-state (`ToolType` enum, width bindings) rather than sharing one — they're intentionally independent screens with different palette/reveal behavior layered on top.
+`Components/DrawingView.swift` wraps `PKCanvasView` (`UIViewRepresentable`) with a delegate callback (`onDrawingChange`) used to trigger re-simulation on every stroke.
+
+`Components/DrawingToolbar.swift` is shared by both drawing screens:
+- `DrawingTool` is the whole tool state as one `Equatable` value (kind, color, per-kind widths). Nothing calls a `setTool`-style method — the toolbar's `onChange(of: tool)` pushes any change to the canvas via `apply(to:)`.
+- `DrawingToolbar` takes an optional `palette` and a `simulationMode`; `ColorblindDrawView` passes its shuffled palette and its vision mode so the swatches render pre-distorted, `CreateView` takes the defaults.
+
+`Components/Theme.swift` holds `AppColor` (shared card/title/border colors) and `GridBackground` (the graph-paper backdrop used by both select screens).

@@ -1,6 +1,6 @@
 //
 //  OnboardingFirstView.swift
-//  Swift-Student-Challenge
+//  Is This Red?
 //
 //  Created by 이은지 on 2/23/26.
 //
@@ -8,107 +8,127 @@
 import SwiftUI
 
 struct OnboardingFirstView: View {
-    @Binding var didFinish: Bool
 
-    private let backgrounds: [Color] = [
-        Color(red: 1.0, green: 0.1843, blue: 0.1843),    // #FF2F2F
-        Color(red: 0.7176, green: 0.7451, blue: 0.1569), // #B7BE28
-        Color(red: 0.8392, green: 0.8588, blue: 0.1843), // #D6DB2F
-        Color(red: 0.7176, green: 0.7451, blue: 0.1569), // #B7BE28
-        Color(red: 1.0, green: 0.2275, blue: 0.1961)     // #FF3A32
-    ]
+	// MARK: - Constants
 
-    @State private var bgIndex: Int = 0
+	private enum Metric {
+		static let titleLineCount = 5
+		static let minimumLineOpacity: Double = 0.35
+		static let opacityStep: Double = 0.12
+	}
 
-    var body: some View {
-        ZStack {
-            currentBackground
-                .ignoresSafeArea()
-                .animation(.easeInOut(duration: 0.6), value: bgIndex)
+	// MARK: - Properties
 
-            VStack(spacing: 28) {
-                Spacer()
+	/// 탭할 때마다 순서대로 바뀌는 "빨강"들. 한 바퀴를 돌면 온보딩이 끝납니다.
+	private static let backgrounds: [Color] = [
+		Color(red: 1.0, green: 0.1843, blue: 0.1843),    // #FF2F2F
+		Color(red: 0.7176, green: 0.7451, blue: 0.1569), // #B7BE28
+		Color(red: 0.8392, green: 0.8588, blue: 0.1843), // #D6DB2F
+		Color(red: 0.7176, green: 0.7451, blue: 0.1569), // #B7BE28
+		Color(red: 1.0, green: 0.2275, blue: 0.1961)     // #FF3A32
+	]
 
-                VStack(spacing: 6) {
-                    ForEach(0..<5, id: \.self) { i in
-                        Text("Is This Red?")
-                            .font(.system(size: 32, weight: .semibold))
-                            .foregroundStyle(.white.opacity(0.9))
-                            .shadow(radius: 10)
-                            .opacity(opacityForLine(i))
-                    }
-                    Spacer().frame(height: 8)
-                    Text("Choose Your Answer")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.85))
-                }
-                .padding(.horizontal, 24)
+	@Binding var didFinish: Bool
+	@State private var backgroundIndex = 0
 
-                Spacer()
+	// MARK: - Body
 
-                HStack(spacing: 14) {
-                    Button {
-                        answerTapped(isYes: true)
-                    } label: {
-                        Text("Yes")
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            .frame(maxWidth: .infinity, minHeight: 54)
-                    }
-                    .buttonStyle(GlassButtonStyle())
+	var body: some View {
+		ZStack {
+			Self.backgrounds[backgroundIndex]
+				.ignoresSafeArea()
+				.animation(.easeInOut(duration: 0.6), value: backgroundIndex)
 
-                    Button {
-                        answerTapped(isYes: false)
-                    } label: {
-                        Text("No")
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            .frame(maxWidth: .infinity, minHeight: 54)
-                    }
-                    .buttonStyle(GlassButtonStyle())
-                }
-                .padding(.horizontal, 22)
-                .padding(.bottom, 34)
-            }
-        }
-    }
+			VStack(spacing: 28) {
+				Spacer()
 
-    private var currentBackground: Color {
-        backgrounds[bgIndex % backgrounds.count]
-    }
+				VStack(spacing: 6) {
+					ForEach(0..<Metric.titleLineCount, id: \.self) { line in
+						Text("Is This Red?")
+							.font(.system(size: 32, weight: .semibold))
+							.foregroundStyle(.white.opacity(0.9))
+							.shadow(radius: 10)
+							.opacity(opacity(forLine: line))
+					}
+					Spacer().frame(height: 8)
+					Text("Choose Your Answer")
+						.font(.system(size: 14, weight: .semibold))
+						.foregroundStyle(.white.opacity(0.85))
+				}
+				.padding(.horizontal, 24)
 
-    private func opacityForLine(_ i: Int) -> Double {
-        let base = 0.95 - (Double(i) * 0.12)
-        return max(0.35, base)
-    }
+				Spacer()
 
-    private func answerTapped(isYes: Bool) {
-        let nextIndex = (bgIndex + 1) % backgrounds.count
+				HStack(spacing: 14) {
+					answerButton("Yes")
+					answerButton("No")
+				}
+				.padding(.horizontal, 22)
+				.padding(.bottom, 34)
+			}
+		}
+	}
 
-        withAnimation(.easeInOut(duration: 0.45)) {
-            bgIndex = nextIndex
-        }
+	// MARK: - Subviews
 
-        if nextIndex == 0 {
-            withAnimation(.easeInOut(duration: 0.35)) {
-                didFinish = true
-            }
-        }
-    }
+	private func answerButton(_ title: String) -> some View {
+		Button {
+			answerDidTap()
+		} label: {
+			Text(title)
+				.font(.system(size: 18, weight: .semibold, design: .rounded))
+				.frame(maxWidth: .infinity, minHeight: 54)
+		}
+		.buttonStyle(GlassButtonStyle())
+	}
+
+	// MARK: - Methods
+
+	private func opacity(forLine line: Int) -> Double {
+		max(Metric.minimumLineOpacity, 0.95 - Double(line) * Metric.opacityStep)
+	}
+
+	// MARK: - Actions
+
+	/// Yes/No 어느 쪽을 눌러도 다음 빨강으로 넘어갑니다 — 정답이 없다는 게 요점입니다.
+	private func answerDidTap() {
+		let nextIndex = (backgroundIndex + 1) % Self.backgrounds.count
+
+		withAnimation(.easeInOut(duration: 0.45)) {
+			backgroundIndex = nextIndex
+		}
+
+		if nextIndex == 0 {
+			withAnimation(.easeInOut(duration: 0.35)) {
+				didFinish = true
+			}
+		}
+	}
 }
 
 struct GlassButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundStyle(.white)
-            .background(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(.white.opacity(configuration.isPressed ? 0.18 : 0.22))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .stroke(.white.opacity(0.35), lineWidth: 1)
-                    )
-                    .shadow(radius: configuration.isPressed ? 2 : 10)
-            )
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .animation(.easeInOut(duration: 0.12), value: configuration.isPressed)
-    }
+
+	// MARK: - Constants
+
+	private enum Metric {
+		static let cornerRadius: CGFloat = 16
+	}
+
+	// MARK: - Body
+
+	func makeBody(configuration: Configuration) -> some View {
+		configuration.label
+			.foregroundStyle(.white)
+			.background(
+				RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
+					.fill(.white.opacity(configuration.isPressed ? 0.18 : 0.22))
+					.overlay(
+						RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
+							.stroke(.white.opacity(0.35), lineWidth: 1)
+					)
+					.shadow(radius: configuration.isPressed ? 2 : 10)
+			)
+			.scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+			.animation(.easeInOut(duration: 0.12), value: configuration.isPressed)
+	}
 }

@@ -1,98 +1,82 @@
+//
+//  VisionModeSelectView.swift
+//  Is This Red?
+//
+
 import SwiftUI
 
 struct VisionModeSelectView: View {
-    var body: some View {
-        ZStack {
-            gridBackground
-            VStack(spacing: 18) {
-                Spacer()
-                
-                Text("Choose a Vision Mode")
-                    .font(.system(size: 32, weight: .semibold, design: .rounded))
-                    .padding(.top, 12)
-                
-                Spacer()
 
-                VStack(spacing: 14) {
-                    HStack(spacing: 14) {
-                        modeCard(
-                            title: "Protanopia",
-                            subtitle: "Reduced sensitivity to red.",
-                            mode: .protanopia
-                        )
-                        modeCard(
-                            title: "Deuteranopia",
-                            subtitle: "Reduced sensitivity to green.",
-                            mode: .deuteranopia
-                        )
-                    }
-                    HStack(spacing: 14) {
-                        modeCard(
-                            title: "Tritanopia",
-                            subtitle: "Reduced sensitivity to blue.",
-                            mode: .tritanopia
-                        )
-                        modeCard(
-                            title: "Achromatopsia",
-                            subtitle: "No color perception.",
-                            mode: .achromatopsia
-                        )
-                    }
-                }
-                .padding(.horizontal, 20)
+	// MARK: - Constants
 
-                Spacer()
-            }
-        }
-    }
+	private enum Metric {
+		static let cardSpacing: CGFloat = 14
+		static let cornerRadius: CGFloat = 14
+		static let cardMaxWidth: CGFloat = 400
+		static let cardMinHeight: CGFloat = 200
+	}
 
-    private var gridBackground: some View {
-        Color.white
-            .ignoresSafeArea()
-            .overlay(
-                GeometryReader { proxy in
-                    let spacing: CGFloat = 30
-                    let size = proxy.size
-                    Path { path in
-                        var x: CGFloat = 0
-                        while x <= size.width {
-                            path.move(to: CGPoint(x: x, y: 0))
-                            path.addLine(to: CGPoint(x: x, y: size.height))
-                            x += spacing
-                        }
-                        var y: CGFloat = 0
-                        while y <= size.height {
-                            path.move(to: CGPoint(x: 0, y: y))
-                            path.addLine(to: CGPoint(x: size.width, y: y))
-                            y += spacing
-                        }
-                    }
-                    .stroke(Color.gray.opacity(0.18), lineWidth: 1)
-                }
-            )
-    }
+	// MARK: - Properties
 
-    private func modeCard(title: String, subtitle: String, mode: VisionMode) -> some View {
-        NavigationLink(destination: ColorblindDrawView(selectedMode: mode)) {
-            VStack(alignment: .center, spacing: 10) {
-                Text(title)
-                    .font(.system(size: 24, weight: .semibold))
-                    .foregroundColor(Color(red: 0.1647, green: 0.0275, blue: 0.0275))
-                    .multilineTextAlignment(.center)
-                Text(subtitle)
-                    .font(.system(size: 18, weight: .regular))
-                    .foregroundColor(Color(red: 0.4275, green: 0.2706, blue: 0.2706))
-                    .multilineTextAlignment(.center)
-            }
-            .frame(maxWidth: 400, minHeight: 200, alignment: .center)
-            .padding(.horizontal, 12)
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(Color(red: 0.8471, green: 0.8157, blue: 0.8157), lineWidth: 1.5)
-            )
-        }
-        .buttonStyle(.plain)
-    }
+	private static let modes: [(mode: VisionMode, subtitle: String)] = [
+		(.protanopia, "Reduced sensitivity to red."),
+		(.deuteranopia, "Reduced sensitivity to green."),
+		(.tritanopia, "Reduced sensitivity to blue."),
+		(.achromatopsia, "No color perception.")
+	]
+
+	// MARK: - Body
+
+	var body: some View {
+		ZStack {
+			GridBackground()
+			VStack(spacing: 18) {
+				Spacer()
+
+				Text("Choose a Vision Mode")
+					.font(.system(size: 32, weight: .semibold, design: .rounded))
+					.padding(.top, 12)
+
+				Spacer()
+
+				VStack(spacing: Metric.cardSpacing) {
+					ForEach(0..<2, id: \.self) { row in
+						HStack(spacing: Metric.cardSpacing) {
+							modeCard(Self.modes[row * 2])
+							modeCard(Self.modes[row * 2 + 1])
+						}
+					}
+				}
+				.padding(.horizontal, 20)
+
+				Spacer()
+			}
+		}
+	}
+
+	// MARK: - Subviews
+
+	private func modeCard(_ item: (mode: VisionMode, subtitle: String)) -> some View {
+		NavigationLink(destination: ColorblindDrawView(selectedMode: item.mode)) {
+			VStack(alignment: .center, spacing: 10) {
+				Text(item.mode.rawValue)
+					.font(.system(size: 24, weight: .semibold))
+					.foregroundColor(AppColor.title)
+					.multilineTextAlignment(.center)
+				Text(item.subtitle)
+					.font(.system(size: 18, weight: .regular))
+					.foregroundColor(AppColor.subtitle)
+					.multilineTextAlignment(.center)
+			}
+			.frame(maxWidth: Metric.cardMaxWidth, minHeight: Metric.cardMinHeight)
+			.padding(.horizontal, 12)
+			.background(Color.white)
+			.clipShape(RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous))
+			.overlay(
+				RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
+					.stroke(AppColor.cardBorder, lineWidth: 1.5)
+			)
+		}
+		.buttonStyle(.plain)
+	}
 }

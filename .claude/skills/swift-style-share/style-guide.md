@@ -6,7 +6,9 @@ Source: [StyleShare/swift-style-guide](https://github.com/StyleShare/swift-style
 
 ### 들여쓰기 및 띄어쓰기
 
-- 들여쓰기에는 탭(tab) 대신 2개의 space를 사용합니다.
+> **프로젝트 오버라이드:** 이 프로젝트는 아래 원문 규칙과 달리 실제 tab 문자(`\t`)로 들여쓰기합니다. 2-space가 아님에 주의.
+
+- (StyleShare 원문) 들여쓰기에는 탭(tab) 대신 2개의 space를 사용합니다.
 - 콜론(`:`)을 쓸 때에는 콜론의 오른쪽에만 공백을 둡니다.
 
   ```swift

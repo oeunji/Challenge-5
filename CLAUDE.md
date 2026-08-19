@@ -11,12 +11,12 @@ xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination
 
 Run all tests:
 ```
-xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M4)" test
+xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M5)" test
 ```
 
 Run a single test (Swift Testing framework, not XCTest):
 ```
-xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M4)" test -only-testing:"Is This Red?Tests/Is_This_Red_Tests/example"
+xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M5)" test -only-testing:"Is This Red?Tests/Is_This_Red_Tests/normalModeKeepsColorUnchanged()"
 ```
 
 Note: `xcodebuild` requires the active developer directory to point at Xcode, not the bare Command Line Tools (`xcode-select -p`). If it errors with "requires Xcode", switch with `sudo xcode-select -s /Applications/Xcode.app`, or just build/run from Xcode directly — that's the normal workflow for this iPad app.

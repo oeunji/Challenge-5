@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  Swift-Student-Challenge
+//  DrawingView.swift
+//  Is This Red?
 //
 //  Created by 이은지 on 2/13/26.
 //
@@ -9,32 +9,24 @@ import SwiftUI
 import PencilKit
 
 struct DrawingView: UIViewRepresentable {
-    @Binding var canvasView: PKCanvasView
-    var onDrawingChange: (() -> Void)? = nil
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onDrawingChange: onDrawingChange)
-    }
+	// MARK: - Properties
 
-    func makeUIView(context: Context) -> PKCanvasView {
-        canvasView.drawingPolicy = .anyInput
-        canvasView.tool = PKInkingTool(.pen, color: .black, width: 5)
-        canvasView.backgroundColor = .white
-        canvasView.delegate = context.coordinator
-        return canvasView
-    }
+	let canvasView: PKCanvasView
+	var onDrawingChange: (() -> Void)?
 
-    func updateUIView(_ uiView: PKCanvasView, context: Context) {}
+	// MARK: - UIViewRepresentable
 
-    final class Coordinator: NSObject, PKCanvasViewDelegate {
-        private let onDrawingChange: (() -> Void)?
+	func makeCoordinator() -> DrawingViewDelegate {
+		DrawingViewDelegate(onDrawingChange: onDrawingChange)
+	}
 
-        init(onDrawingChange: (() -> Void)?) {
-            self.onDrawingChange = onDrawingChange
-        }
+	func makeUIView(context: Context) -> PKCanvasView {
+		canvasView.drawingPolicy = .anyInput
+		canvasView.backgroundColor = .white
+		canvasView.delegate = context.coordinator
+		return canvasView
+	}
 
-        func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-            onDrawingChange?()
-        }
-    }
+	func updateUIView(_ uiView: PKCanvasView, context: Context) {}
 }

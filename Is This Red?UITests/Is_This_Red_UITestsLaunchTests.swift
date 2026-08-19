@@ -9,13 +9,19 @@ import XCTest
 
 final class Is_This_Red_UITestsLaunchTests: XCTestCase {
 
+    // MARK: - Properties
+
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
 
+    // MARK: - Setup
+
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
+
+    // MARK: - Tests
 
     @MainActor
     func testLaunch() throws {

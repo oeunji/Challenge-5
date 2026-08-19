@@ -17,7 +17,7 @@ Writing new Swift code, reviewing or refactoring existing Swift code, or settlin
 
 | Area | Rule |
 |---|---|
-| Indent | 2 spaces, never tabs |
+| Indent | Tab character (`\t`) — **project override**, StyleShare's own default is 2 spaces |
 | Colon `:` | space after only — `let x: Int`, not `let x : Int` |
 | Line length | max 99 characters |
 | Imports | system frameworks first, blank line, then third-party alphabetized |
