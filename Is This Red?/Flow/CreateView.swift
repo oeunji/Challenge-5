@@ -43,19 +43,22 @@ struct CreateView: View {
 				}
 			}
 	}
+}
 
-	// MARK: - Subviews
+// MARK: - Subviews
 
-	private var nextButton: some View {
-		Button {
-			coordinator.push(.visionSim)
-		} label: {
-			Text("Next")
-				.font(.system(size: 16, weight: .semibold, design: .rounded))
-				.foregroundColor(.black)
-		}
-		.buttonStyle(.bordered)
-		.tint(.clear)
-		.padding(.horizontal, 12)
-	}
+extension CreateView {
+    
+    private var nextButton: some View {
+        Button {
+            coordinator.push(.visionSim)
+        } label: {
+            Text("Next")
+                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .foregroundColor(.black)
+        }
+        .buttonStyle(.bordered)
+        .tint(.clear)
+        .padding(.horizontal, 12)
+    }
 }

@@ -69,25 +69,28 @@ struct VisionSimView: View {
 		}
 	}
 
-	// MARK: - Subviews
-
-	private func preview(title: String, image: UIImage?, side: CGFloat) -> some View {
-		VStack {
-			Text(title)
-				.font(.caption)
-			if let image {
-				Image(uiImage: image)
-					.resizable()
-					.scaledToFit()
-					.frame(width: side, height: side)
-					.border(Color.gray.opacity(0.3))
-			}
-		}
-	}
-
 	// MARK: - Methods
 
 	private func updateImages() {
 		session.render(.fittingDrawing(padding: Metric.drawingPadding), mode: selectedMode)
 	}
+}
+
+// MARK: - Subviews
+
+extension VisionSimView {
+
+    private func preview(title: String, image: UIImage?, side: CGFloat) -> some View {
+        VStack {
+            Text(title)
+                .font(.caption)
+            if let image {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: side, height: side)
+                    .border(Color.gray.opacity(0.3))
+            }
+        }
+    }
 }

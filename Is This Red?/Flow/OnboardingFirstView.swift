@@ -69,19 +69,6 @@ struct OnboardingFirstView: View {
 		}
 	}
 
-	// MARK: - Subviews
-
-	private func answerButton(_ title: String) -> some View {
-		Button {
-			answerDidTap()
-		} label: {
-			Text(title)
-				.font(.system(size: 18, weight: .semibold, design: .rounded))
-				.frame(maxWidth: .infinity, minHeight: 54)
-		}
-		.buttonStyle(GlassButtonStyle())
-	}
-
 	// MARK: - Methods
 
 	private func opacity(forLine line: Int) -> Double {
@@ -106,29 +93,18 @@ struct OnboardingFirstView: View {
 	}
 }
 
-struct GlassButtonStyle: ButtonStyle {
+// MARK: - Subviews
 
-	// MARK: - Constants
+extension OnboardingFirstView {
 
-	private enum Metric {
-		static let cornerRadius: CGFloat = 16
-	}
-
-	// MARK: - Body
-
-	func makeBody(configuration: Configuration) -> some View {
-		configuration.label
-			.foregroundStyle(.white)
-			.background(
-				RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
-					.fill(.white.opacity(configuration.isPressed ? 0.18 : 0.22))
-					.overlay(
-						RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
-							.stroke(.white.opacity(0.35), lineWidth: 1)
-					)
-					.shadow(radius: configuration.isPressed ? 2 : 10)
-			)
-			.scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-			.animation(.easeInOut(duration: 0.12), value: configuration.isPressed)
-	}
+    private func answerButton(_ title: String) -> some View {
+        Button {
+            answerDidTap()
+        } label: {
+            Text(title)
+                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .frame(maxWidth: .infinity, minHeight: 54)
+        }
+        .buttonStyle(GlassButtonStyle())
+    }
 }

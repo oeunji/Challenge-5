@@ -65,87 +65,90 @@ struct ColorblindDrawView: View {
 			Text("This will show the normal view so you can compare it with the simulated vision.")
 		}
 	}
+}
 
-	// MARK: - Subviews
+// MARK: - Subviews
 
-	private var canvasLayers: some View {
-		GeometryReader { geo in
-			ZStack(alignment: .topLeading) {
-				if let displayedImage = viewModel.displayedImage {
-					Image(uiImage: displayedImage)
-						.resizable()
-						.scaledToFit()
-						.frame(maxWidth: .infinity, maxHeight: .infinity)
-						.allowsHitTesting(false)
-				}
+extension ColorblindDrawView {
+    
+    private var canvasLayers: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .topLeading) {
+                if let displayedImage = viewModel.displayedImage {
+                    Image(uiImage: displayedImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .allowsHitTesting(false)
+                }
 
-				DrawingView(canvasView: canvasView) {
-					viewModel.render(canvasView.drawing)
-				}
-				.opacity(Metric.canvasOpacity)
-				.ignoresSafeArea(edges: .bottom)
+                DrawingView(canvasView: canvasView) {
+                    viewModel.render(canvasView.drawing)
+                }
+                .opacity(Metric.canvasOpacity)
+                .ignoresSafeArea(edges: .bottom)
 
-				missionCard
-					.padding(Metric.overlayPadding)
-					.allowsHitTesting(false)
+                missionCard
+                    .padding(Metric.overlayPadding)
+                    .allowsHitTesting(false)
 
-				if viewModel.isRevealActive {
-					revealPicker
-						.padding(Metric.overlayPadding)
-						.transition(.opacity)
-						.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-				}
-			}
-			.onAppear {
-				viewModel.renderSize = geo.size
-				viewModel.render(canvasView.drawing)
-			}
-			.onChange(of: geo.size) { _, newSize in
-				viewModel.renderSize = newSize
-			}
-		}
-	}
+                if viewModel.isRevealActive {
+                    revealPicker
+                        .padding(Metric.overlayPadding)
+                        .transition(.opacity)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                }
+            }
+            .onAppear {
+                viewModel.renderSize = geo.size
+                viewModel.render(canvasView.drawing)
+            }
+            .onChange(of: geo.size) { _, newSize in
+                viewModel.renderSize = newSize
+            }
+        }
+    }
 
-	private var missionCard: some View {
-		VStack(alignment: .leading, spacing: 8) {
-			Text("Mission")
-				.font(.caption)
-				.foregroundStyle(.secondary)
+    private var missionCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Mission")
+                .font(.caption)
+                .foregroundStyle(.secondary)
 
-			Text(viewModel.missionText)
-				.font(.system(size: 14, weight: .semibold, design: .rounded))
-				.foregroundStyle(.primary)
-		}
-		.padding(Metric.cardPadding)
-		.background(.ultraThinMaterial)
-		.cornerRadius(Metric.cardPadding)
-		.shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 4)
-	}
+            Text(viewModel.missionText)
+                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                .foregroundStyle(.primary)
+        }
+        .padding(Metric.cardPadding)
+        .background(.ultraThinMaterial)
+        .cornerRadius(Metric.cardPadding)
+        .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 4)
+    }
 
-	private var revealPicker: some View {
-		@Bindable var viewModel = viewModel
+    private var revealPicker: some View {
+        @Bindable var viewModel = viewModel
 
-		return Picker("Reveal", selection: $viewModel.revealSelection) {
-			ForEach(ColorblindDrawViewModel.RevealSelection.allCases, id: \.self) { option in
-				Text(option.rawValue).tag(option)
-			}
-		}
-		.pickerStyle(.segmented)
-		.frame(width: Metric.pickerWidth)
-	}
+        return Picker("Reveal", selection: $viewModel.revealSelection) {
+            ForEach(ColorblindDrawViewModel.RevealSelection.allCases, id: \.self) { option in
+                Text(option.rawValue).tag(option)
+            }
+        }
+        .pickerStyle(.segmented)
+        .frame(width: Metric.pickerWidth)
+    }
 
-	private var revealButton: some View {
-		Button {
-			viewModel.showRevealAlert = true
-		} label: {
-			Text("Reveal Reality")
-				.font(.system(size: 16, weight: .semibold, design: .rounded))
-				.foregroundColor(viewModel.isRevealActive ? .white : .black)
-				.frame(maxWidth: .infinity, minHeight: 44)
-		}
-		.buttonStyle(.bordered)
-		.disabled(viewModel.isRevealActive)
-		.padding(.horizontal)
-		.padding(.bottom, 16)
-	}
+    private var revealButton: some View {
+        Button {
+            viewModel.showRevealAlert = true
+        } label: {
+            Text("Reveal Reality")
+                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .foregroundColor(viewModel.isRevealActive ? .white : .black)
+                .frame(maxWidth: .infinity, minHeight: 44)
+        }
+        .buttonStyle(.bordered)
+        .disabled(viewModel.isRevealActive)
+        .padding(.horizontal)
+        .padding(.bottom, 16)
+    }
 }
