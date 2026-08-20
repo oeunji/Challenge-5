@@ -18,6 +18,8 @@ struct VisionModeSelectView: View {
 
 	// MARK: - Properties
 
+	@Environment(AppCoordinator.self) private var coordinator
+
 	private static let modes: [(mode: VisionMode, subtitle: String)] = [
 		(.protanopia, "Reduced sensitivity to red."),
 		(.deuteranopia, "Reduced sensitivity to green."),
@@ -53,30 +55,30 @@ struct VisionModeSelectView: View {
 			}
 		}
 	}
+}
 
-	// MARK: - Subviews
+// MARK: - Subviews
 
-	private func modeCard(_ item: (mode: VisionMode, subtitle: String)) -> some View {
-		NavigationLink(destination: ColorblindDrawView(selectedMode: item.mode)) {
-			VStack(alignment: .center, spacing: 10) {
-				Text(item.mode.rawValue)
-					.font(.system(size: 24, weight: .semibold))
-					.foregroundColor(AppColor.title)
-					.multilineTextAlignment(.center)
-				Text(item.subtitle)
-					.font(.system(size: 18, weight: .regular))
-					.foregroundColor(AppColor.subtitle)
-					.multilineTextAlignment(.center)
-			}
-			.frame(maxWidth: Metric.cardMaxWidth, minHeight: Metric.cardMinHeight)
-			.padding(.horizontal, 12)
-			.background(Color.white)
-			.clipShape(RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous))
-			.overlay(
-				RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
-					.stroke(AppColor.cardBorder, lineWidth: 1.5)
-			)
-		}
-		.buttonStyle(.plain)
-	}
+extension VisionModeSelectView {
+    
+    private func modeCard(_ item: (mode: VisionMode, subtitle: String)) -> some View {
+        Button {
+            coordinator.push(.colorblindDraw(item.mode))
+        } label: {
+            VStack(alignment: .center, spacing: 10) {
+                Text(item.mode.rawValue)
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundColor(AppColor.title)
+                    .multilineTextAlignment(.center)
+                Text(item.subtitle)
+                    .font(.system(size: 18, weight: .regular))
+                    .foregroundColor(AppColor.subtitle)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: Metric.cardMaxWidth, minHeight: Metric.cardMinHeight)
+            .padding(.horizontal, 12)
+            .cardSurface(cornerRadius: Metric.cornerRadius)
+        }
+        .buttonStyle(.plain)
+    }
 }

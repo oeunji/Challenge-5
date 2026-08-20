@@ -12,14 +12,17 @@ struct CreateView: View {
 
 	// MARK: - Properties
 
+	@Environment(AppCoordinator.self) private var coordinator
+	@Environment(DrawingSession.self) private var session
 	@State private var canvasView = PKCanvasView()
 	@State private var tool = DrawingTool()
-	@Environment(\.dismiss) private var dismiss
 
 	// MARK: - Body
 
 	var body: some View {
-		DrawingView(canvasView: canvasView)
+		DrawingView(canvasView: canvasView) {
+			session.drawing = canvasView.drawing
+		}
 			.ignoresSafeArea(edges: .bottom)
 			.safeAreaInset(edge: .bottom) {
 				Text("Feel free to draw, and tap the Next button when you’re done.")
@@ -33,26 +36,29 @@ struct CreateView: View {
 			}
 			.toolbar {
 				ToolbarItem(placement: .topBarTrailing) {
-					nextLink
+					nextButton
 				}
 				ToolbarItem(placement: .principal) {
 					DrawingToolbar(tool: $tool, canvasView: canvasView)
 				}
 			}
 	}
+}
 
-	// MARK: - Subviews
+// MARK: - Subviews
 
-	private var nextLink: some View {
-		NavigationLink {
-			VisionSimView(canvasView: canvasView, onFinish: { dismiss() })
-		} label: {
-			Text("Next")
-				.font(.system(size: 16, weight: .semibold, design: .rounded))
-				.foregroundColor(.black)
-		}
-		.buttonStyle(.bordered)
-		.tint(.clear)
-		.padding(.horizontal, 12)
-	}
+extension CreateView {
+    
+    private var nextButton: some View {
+        Button {
+            coordinator.push(.visionSim)
+        } label: {
+            Text("Next")
+                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .foregroundColor(.black)
+        }
+        .buttonStyle(.bordered)
+        .tint(.clear)
+        .padding(.horizontal, 12)
+    }
 }

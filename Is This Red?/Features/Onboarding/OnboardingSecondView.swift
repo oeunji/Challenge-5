@@ -20,7 +20,7 @@ struct OnboardingSecondView: View {
 
 	// MARK: - Properties
 
-	@Binding var didFinish: Bool
+	@Environment(AppCoordinator.self) private var coordinator
 	@State private var revealedCount = 1
 
 	// MARK: - Body
@@ -55,7 +55,7 @@ struct OnboardingSecondView: View {
 			if revealedCount < Self.lines.count {
 				revealedCount += 1
 			} else {
-				didFinish = true
+				coordinator.onboardingDidFinish()
 			}
 		}
 	}

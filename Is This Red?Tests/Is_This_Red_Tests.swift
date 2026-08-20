@@ -18,7 +18,7 @@ struct Is_This_Red_Tests {
 	// MARK: - Tests
 
 	@Test func normalModeKeepsColorUnchanged() {
-		#expect(VisionSimulator.simulate(color: pureRed, mode: .normal) == pureRed)
+		#expect(ColorVisionService.simulate(color: pureRed, mode: .normal) == pureRed)
 	}
 
 	/// 전색맹은 휘도 하나로 뭉개지므로 세 채널이 같아야 하고, 순수 빨강이면 0.299가 됩니다.
@@ -43,7 +43,7 @@ struct Is_This_Red_Tests {
 
 	private func components(of mode: VisionMode) -> (Double, Double, Double) {
 		var (red, green, blue, alpha): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-		UIColor(VisionSimulator.simulate(color: pureRed, mode: mode))
+		UIColor(ColorVisionService.simulate(color: pureRed, mode: mode))
 			.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 		return (Double(red), Double(green), Double(blue))
 	}
