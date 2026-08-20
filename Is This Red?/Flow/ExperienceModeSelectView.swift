@@ -66,34 +66,31 @@ struct ExperienceModeSelectView: View {
 			}
 		}
 	}
+}
 
-	// MARK: - Subviews
+// MARK: - Subviews
 
-	private func modeButton(title: String, subtitle: String, route: Route) -> some View {
-		Button {
-			coordinator.push(route)
-		} label: {
-			VStack(spacing: 6) {
-				Text(title)
-					.font(.system(size: 18, weight: .semibold))
-					.foregroundColor(AppColor.title)
-				Text(subtitle)
-					.font(.system(size: 12, weight: .regular))
-					.foregroundColor(AppColor.subtitle)
-					.multilineTextAlignment(.center)
-					.lineLimit(2)
-			}
-			.frame(width: Metric.buttonWidth)
-			.frame(minHeight: Metric.buttonMinHeight)
-			.padding(.vertical, 6)
-			.background(.white)
-			.clipShape(RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous))
-			.overlay(
-				RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
-					.stroke(AppColor.cardBorder, lineWidth: 1.5)
-			)
-			.shadow(color: .white.opacity(0.25), radius: 4, x: 0, y: 2)
-		}
-		.buttonStyle(.plain)
-	}
+extension ExperienceModeSelectView {
+    
+    private func modeButton(title: String, subtitle: String, route: Route) -> some View {
+        Button {
+            coordinator.push(route)
+        } label: {
+            VStack(spacing: 6) {
+                Text(title)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(AppColor.title)
+                Text(subtitle)
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundColor(AppColor.subtitle)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
+            .frame(width: Metric.buttonWidth)
+            .frame(minHeight: Metric.buttonMinHeight)
+            .padding(.vertical, 6)
+            .cardSurface(cornerRadius: Metric.cornerRadius)
+        }
+        .buttonStyle(.plain)
+    }
 }

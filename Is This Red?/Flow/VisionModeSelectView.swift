@@ -74,12 +74,7 @@ struct VisionModeSelectView: View {
 			}
 			.frame(maxWidth: Metric.cardMaxWidth, minHeight: Metric.cardMinHeight)
 			.padding(.horizontal, 12)
-			.background(Color.white)
-			.clipShape(RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous))
-			.overlay(
-				RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
-					.stroke(AppColor.cardBorder, lineWidth: 1.5)
-			)
+			.cardSurface(cornerRadius: Metric.cornerRadius)
 		}
 		.buttonStyle(.plain)
 	}
