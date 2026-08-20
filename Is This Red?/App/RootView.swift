@@ -25,31 +25,34 @@ struct RootView: View {
 			experienceStack
 		}
 	}
+}
 
-	// MARK: - Subviews
+// MARK: - Subviews
 
-	private var experienceStack: some View {
-		@Bindable var coordinator = coordinator
+extension RootView {
+    
+    private var experienceStack: some View {
+        @Bindable var coordinator = coordinator
 
-		return NavigationStack(path: $coordinator.path) {
-			ExperienceModeSelectView()
-				.navigationDestination(for: Route.self) { route in
-					destination(for: route)
-				}
-		}
-	}
+        return NavigationStack(path: $coordinator.path) {
+            ExperienceModeSelectView()
+                .navigationDestination(for: Route.self) { route in
+                    destination(for: route)
+                }
+        }
+    }
 
-	@ViewBuilder
-	private func destination(for route: Route) -> some View {
-		switch route {
-		case .create:
-			CreateView()
-		case .visionSim:
-			VisionSimView()
-		case .visionModeSelect:
-			VisionModeSelectView()
-		case .colorblindDraw(let mode):
-			ColorblindDrawView(selectedMode: mode)
-		}
-	}
+    @ViewBuilder
+    private func destination(for route: Route) -> some View {
+        switch route {
+        case .create:
+            CreateView()
+        case .visionSim:
+            VisionSimView()
+        case .visionModeSelect:
+            VisionModeSelectView()
+        case .colorblindDraw(let mode):
+            ColorblindDrawView(selectedMode: mode)
+        }
+    }
 }
