@@ -18,47 +18,32 @@ struct ColorblindDrawView: View {
 		static let cardPadding: CGFloat = 12
 		/// 캔버스는 거의 투명하게 두고, 그 아래 시뮬레이션된 이미지를 대신 보여줍니다.
 		static let canvasOpacity: Double = 0.02
-	}
-
-	// MARK: - Types
-
-	enum RevealSelection: String, CaseIterable {
-		case simulated = "Simulated"
-		case normal = "Normal"
+		static let pickerWidth: CGFloat = 220
 	}
 
 	// MARK: - Properties
 
-	private static let missions: [String] = [
-		"Draw a ripe apple.",
-		"Design a traffic light.",
-		"Draw a rainbow.",
-		"Create a red and green warning sign.",
-		"Draw a watermelon.",
-		"Design a health bar (red to green)."
-	]
-
-	let selectedMode: VisionMode
-
-	@State private var session = DrawingSession()
+	@State private var viewModel: ColorblindDrawViewModel
 	@State private var canvasView = PKCanvasView()
 	@State private var tool = DrawingTool()
-	@State private var palette = [Color.black] + DrawingTool.defaultPalette.dropFirst().shuffled()
-	@State private var missionText = Self.missions.randomElement() ?? ""
-	@State private var renderSize: CGSize = .zero
-	@State private var isRevealActive = false
-	@State private var revealSelection: RevealSelection = .simulated
-	@State private var showRevealAlert = false
+
+	// MARK: - Initialize
+
+	init(selectedMode: VisionMode) {
+		_viewModel = State(initialValue: ColorblindDrawViewModel(selectedMode: selectedMode))
+	}
 
 	// MARK: - Body
 
 	var body: some View {
-		VStack(spacing: Metric.stackSpacing) {
+		@Bindable var viewModel = viewModel
+
+		return VStack(spacing: Metric.stackSpacing) {
 			DrawingToolbar(
 				tool: $tool,
 				canvasView: canvasView,
-				palette: palette,
-				simulationMode: effectiveMode
+				palette: viewModel.palette,
+				simulationMode: viewModel.effectiveMode
 			)
 			.padding(.horizontal)
 
@@ -66,16 +51,15 @@ struct ColorblindDrawView: View {
 
 			revealButton
 		}
-		.navigationTitle("Mode: \(selectedMode.rawValue)")
+		.navigationTitle("Mode: \(viewModel.selectedMode.rawValue)")
 		.navigationBarTitleDisplayMode(.inline)
-		.alert("Reveal Reality?", isPresented: $showRevealAlert) {
+		.alert("Reveal Reality?", isPresented: $viewModel.showRevealAlert) {
 			Button("Cancel", role: .cancel) {}
 			Button("Reveal") {
 				withAnimation(.easeInOut(duration: 0.2)) {
-					isRevealActive = true
-					revealSelection = .normal
+					viewModel.revealDidConfirm()
 				}
-				renderAndSimulate()
+				viewModel.render(canvasView.drawing)
 			}
 		} message: {
 			Text("This will show the normal view so you can compare it with the simulated vision.")
@@ -87,7 +71,7 @@ struct ColorblindDrawView: View {
 	private var canvasLayers: some View {
 		GeometryReader { geo in
 			ZStack(alignment: .topLeading) {
-				if let displayedImage {
+				if let displayedImage = viewModel.displayedImage {
 					Image(uiImage: displayedImage)
 						.resizable()
 						.scaledToFit()
@@ -96,7 +80,7 @@ struct ColorblindDrawView: View {
 				}
 
 				DrawingView(canvasView: canvasView) {
-					renderAndSimulate()
+					viewModel.render(canvasView.drawing)
 				}
 				.opacity(Metric.canvasOpacity)
 				.ignoresSafeArea(edges: .bottom)
@@ -105,7 +89,7 @@ struct ColorblindDrawView: View {
 					.padding(Metric.overlayPadding)
 					.allowsHitTesting(false)
 
-				if isRevealActive {
+				if viewModel.isRevealActive {
 					revealPicker
 						.padding(Metric.overlayPadding)
 						.transition(.opacity)
@@ -113,11 +97,11 @@ struct ColorblindDrawView: View {
 				}
 			}
 			.onAppear {
-				renderSize = geo.size
-				renderAndSimulate()
+				viewModel.renderSize = geo.size
+				viewModel.render(canvasView.drawing)
 			}
 			.onChange(of: geo.size) { _, newSize in
-				renderSize = newSize
+				viewModel.renderSize = newSize
 			}
 		}
 	}
@@ -128,7 +112,7 @@ struct ColorblindDrawView: View {
 				.font(.caption)
 				.foregroundStyle(.secondary)
 
-			Text(missionText)
+			Text(viewModel.missionText)
 				.font(.system(size: 14, weight: .semibold, design: .rounded))
 				.foregroundStyle(.primary)
 		}
@@ -139,49 +123,29 @@ struct ColorblindDrawView: View {
 	}
 
 	private var revealPicker: some View {
-		Picker("Reveal", selection: $revealSelection) {
-			ForEach(RevealSelection.allCases, id: \.self) { option in
+		@Bindable var viewModel = viewModel
+
+		return Picker("Reveal", selection: $viewModel.revealSelection) {
+			ForEach(ColorblindDrawViewModel.RevealSelection.allCases, id: \.self) { option in
 				Text(option.rawValue).tag(option)
 			}
 		}
 		.pickerStyle(.segmented)
-		.frame(width: 220)
+		.frame(width: Metric.pickerWidth)
 	}
 
 	private var revealButton: some View {
 		Button {
-			showRevealAlert = true
+			viewModel.showRevealAlert = true
 		} label: {
 			Text("Reveal Reality")
 				.font(.system(size: 16, weight: .semibold, design: .rounded))
-				.foregroundColor(isRevealActive ? .white : .black)
+				.foregroundColor(viewModel.isRevealActive ? .white : .black)
 				.frame(maxWidth: .infinity, minHeight: 44)
 		}
 		.buttonStyle(.bordered)
-		.disabled(isRevealActive)
+		.disabled(viewModel.isRevealActive)
 		.padding(.horizontal)
 		.padding(.bottom, 16)
-	}
-
-	// MARK: - Computed Values
-
-	/// Reveal 중 "Normal"을 고르면 실제 색을, 그 외에는 선택한 색각 모드를 적용합니다.
-	private var effectiveMode: VisionMode {
-		isShowingNormal ? .normal : selectedMode
-	}
-
-	private var displayedImage: UIImage? {
-		isShowingNormal ? session.normalImage : session.simulatedImage
-	}
-
-	private var isShowingNormal: Bool {
-		isRevealActive && revealSelection == .normal
-	}
-
-	// MARK: - Methods
-
-	private func renderAndSimulate() {
-		session.drawing = canvasView.drawing
-		session.render(.fixed(renderSize), mode: selectedMode)
 	}
 }
