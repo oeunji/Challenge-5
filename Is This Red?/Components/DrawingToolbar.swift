@@ -161,7 +161,7 @@ struct DrawingToolbar: View {
 			tool.select(color)
 		} label: {
 			Circle()
-				.fill(VisionSimulator.simulate(color: color, mode: simulationMode))
+				.fill(ColorVisionService.simulate(color: color, mode: simulationMode))
 				.frame(width: size, height: size)
 				.overlay(
 					Circle()

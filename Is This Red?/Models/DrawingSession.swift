@@ -58,8 +58,8 @@ final class DrawingSession {
 	}
 
 	func render(_ framing: Framing, mode: VisionMode) {
-		let image = VisionSimulator.render(drawing: drawing, rect: rect(for: framing))
+		let image = DrawingRenderService.render(drawing: drawing, rect: rect(for: framing))
 		normalImage = image
-		simulatedImage = VisionSimulator.simulate(image: image, mode: mode)
+		simulatedImage = ColorVisionService.simulate(image: image, mode: mode)
 	}
 }

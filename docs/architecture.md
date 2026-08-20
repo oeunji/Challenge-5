@@ -17,12 +17,13 @@ From `ExperienceModeSelectView` (`Flow/`), the user picks one of two independent
 
 ## Simulation core
 
-`Services/VisionSimulationService.swift` holds the `VisionMode` enum and the `VisionSimulator` namespace (an `enum` of statics, so the `CIContext` is created once for the whole app):
+The domain type lives outside the service layer; each service file owns exactly one framework.
 
-- `VisionMode.colorMatrix` is the **single source of truth** for the per-mode RGB coefficients. Change a mode's simulation here and nowhere else.
-- `render(drawing:rect:)` rasterizes a `PKDrawing` to a `UIImage`.
-- `simulate(image:mode:)` applies those coefficients through `CIFilter.colorMatrix`.
-- `simulate(color:mode:)` applies the same coefficients arithmetically to a single `Color`, for palette swatches — `CIFilter` only operates on images.
+- `Models/VisionMode.swift` — the `VisionMode` enum and `colorMatrix`, the **single source of truth** for the per-mode RGB coefficients. No imports. Change a mode's simulation here and nowhere else.
+- `Services/DrawingRenderService.swift` — PencilKit only. `render(drawing:rect:)` rasterizes a `PKDrawing` to a `UIImage`.
+- `Services/ColorVisionService.swift` — CoreImage only, and an `enum` of statics so the `CIContext` is created once for the whole app.
+  - `simulate(image:mode:)` applies the coefficients through `CIFilter.colorMatrix`.
+  - `simulate(color:mode:)` applies the same coefficients arithmetically to a single `Color`, for palette swatches — `CIFilter` only operates on images. Both read `VisionMode.colorMatrix`, so they cannot drift apart.
 
 `Is This Red?Tests` pins the matrix wiring (`normal` is identity, `achromatopsia` flattens to luminance, `protanopia` doesn't).
 
