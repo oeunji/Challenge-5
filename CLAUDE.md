@@ -31,3 +31,18 @@ The project uses Xcode 16's file-system-synchronized groups (`PBXFileSystemSynch
 ## Architecture
 
 Two independent SwiftUI experiences (free-draw comparison vs. mission-based drawing) share one color-vision simulation engine (`VisionMode` enum + Core Image color matrix). See `docs/architecture.md` for the screen flow, the simulation core (including a duplication gotcha), and the drawing components.
+
+## Design system
+
+Don't invent colors, sizes, or spacing numbers in UI code. Take them from:
+
+- Colors — colorsets in `Assets.xcassets` (`Color("PrimaryBase")`, `Surface`, `OnSurface`, `Outline`, `Accent`, …)
+- Type — `DesignSystem/Typography.swift` (`.font(Typography.title2)`). Never `Font.system(size:)` — it breaks Dynamic Type.
+- Spacing — `DesignSystem/Spacing.swift` (`Spacing.x4` … `Spacing.x64`)
+- Shadows — `DesignSystem/Elevation.swift` (`deepElevation()`, `glossyElevation(fill:in:)`)
+
+If no token fits, don't round to the nearest one — say which value doesn't fit and ask before adding a token.
+
+Most screens are not migrated yet, so existing code is not the example to copy. See `docs/design-system.md` for the full token tables, the Figma source frames, and the two conversion gotchas (Figma blur is 2× SwiftUI `radius`; Figma `Title 1` is SwiftUI `.title`).
+
+This app is about color-vision deficiency, so UI state must never be conveyed by color alone — pair color with an icon, weight, border, or position.
