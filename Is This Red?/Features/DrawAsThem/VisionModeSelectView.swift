@@ -36,7 +36,8 @@ struct VisionModeSelectView: View {
 				Spacer()
 
 				Text("Choose a Vision Mode")
-					.font(.system(size: 32, weight: .semibold, design: .rounded))
+					.font(Typography.largeTitle.weight(.semibold))
+					.fontDesign(.rounded)
 					.padding(.top, 12)
 
 				Spacer()
@@ -67,11 +68,11 @@ extension VisionModeSelectView {
         } label: {
             VStack(alignment: .center, spacing: 10) {
                 Text(item.mode.rawValue)
-                    .font(.system(size: 24, weight: .semibold))
+                    .font(Typography.title2.weight(.semibold))
                     .foregroundColor(AppColor.title)
                     .multilineTextAlignment(.center)
                 Text(item.subtitle)
-                    .font(.system(size: 18, weight: .regular))
+                    .font(Typography.body)
                     .foregroundColor(AppColor.subtitle)
                     .multilineTextAlignment(.center)
             }

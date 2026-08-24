@@ -35,14 +35,14 @@ struct ExperienceModeSelectView: View {
 					.frame(maxWidth: 520, maxHeight: 140)
 
 				Text("The color you see isn’t the color everyone sees.")
-					.font(.system(size: 22, weight: .semibold))
+					.font(Typography.title2.weight(.semibold))
 					.foregroundColor(AppColor.title)
 
 				Spacer()
 					.frame(height: 46)
 
 				Text("Choose Your Experience")
-					.font(.system(size: 18, weight: .medium))
+					.font(Typography.body.weight(.medium))
 					.foregroundColor(AppColor.subtitle)
 					.padding(.vertical, 10)
 
@@ -78,10 +78,10 @@ extension ExperienceModeSelectView {
         } label: {
             VStack(spacing: 6) {
                 Text(title)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(Typography.headline)
                     .foregroundColor(AppColor.title)
                 Text(subtitle)
-                    .font(.system(size: 12, weight: .regular))
+                    .font(Typography.caption1)
                     .foregroundColor(AppColor.subtitle)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)

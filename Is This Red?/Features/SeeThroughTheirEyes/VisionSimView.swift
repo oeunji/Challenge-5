@@ -83,7 +83,7 @@ extension VisionSimView {
     private func preview(title: String, image: UIImage?, side: CGFloat) -> some View {
         VStack {
             Text(title)
-                .font(.caption)
+                .font(Typography.caption1)
             if let image {
                 Image(uiImage: image)
                     .resizable()

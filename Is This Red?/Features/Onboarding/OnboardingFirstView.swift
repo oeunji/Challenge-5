@@ -45,14 +45,14 @@ struct OnboardingFirstView: View {
 				VStack(spacing: 6) {
 					ForEach(0..<Metric.titleLineCount, id: \.self) { line in
 						Text("Is This Red?")
-							.font(.system(size: 32, weight: .semibold))
+							.font(Typography.largeTitle.weight(.semibold))
 							.foregroundStyle(.white.opacity(0.9))
 							.shadow(radius: 10)
 							.opacity(opacity(forLine: line))
 					}
 					Spacer().frame(height: 8)
 					Text("Choose Your Answer")
-						.font(.system(size: 14, weight: .semibold))
+						.font(Typography.subheadline.weight(.semibold))
 						.foregroundStyle(.white.opacity(0.85))
 				}
 				.padding(.horizontal, 24)
@@ -102,7 +102,8 @@ extension OnboardingFirstView {
             answerDidTap()
         } label: {
             Text(title)
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(Typography.headline)
+                .fontDesign(.rounded)
                 .frame(maxWidth: .infinity, minHeight: 54)
         }
         .buttonStyle(GlassButtonStyle())

@@ -26,7 +26,7 @@ struct CreateView: View {
 			.ignoresSafeArea(edges: .bottom)
 			.safeAreaInset(edge: .bottom) {
 				Text("Feel free to draw, and tap the Next button when you’re done.")
-					.font(.footnote)
+					.font(Typography.footnote)
 					.foregroundStyle(.secondary)
 					.multilineTextAlignment(.center)
 					.frame(maxWidth: .infinity)
@@ -54,7 +54,8 @@ extension CreateView {
             coordinator.push(.visionSim)
         } label: {
             Text("Next")
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .font(Typography.callout.weight(.semibold))
+                .fontDesign(.rounded)
                 .foregroundColor(.black)
         }
         .buttonStyle(.bordered)

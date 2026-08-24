@@ -112,11 +112,12 @@ extension ColorblindDrawView {
     private var missionCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Mission")
-                .font(.caption)
+                .font(Typography.caption1)
                 .foregroundStyle(.secondary)
 
             Text(viewModel.missionText)
-                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                .font(Typography.subheadline.weight(.semibold))
+                .fontDesign(.rounded)
                 .foregroundStyle(.primary)
         }
         .padding(Metric.cardPadding)
@@ -142,7 +143,8 @@ extension ColorblindDrawView {
             viewModel.showRevealAlert = true
         } label: {
             Text("Reveal Reality")
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .font(Typography.callout.weight(.semibold))
+                .fontDesign(.rounded)
                 .foregroundColor(viewModel.isRevealActive ? .white : .black)
                 .frame(maxWidth: .infinity, minHeight: 44)
         }

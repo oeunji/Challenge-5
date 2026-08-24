@@ -34,7 +34,7 @@ struct OnboardingSecondView: View {
 				ForEach(0..<revealedCount, id: \.self) { index in
 					let isLast = index == Self.lines.count - 1
 					Text(Self.lines[index])
-						.font(.system(size: isLast ? 24 : 22, weight: isLast ? .bold : .semibold))
+						.font(Typography.title2.weight(isLast ? .bold : .semibold))
 						.foregroundStyle(.white)
 						.transition(.opacity)
 				}
