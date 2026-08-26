@@ -6,22 +6,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Build (iOS Simulator):
 ```
-xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination "generic/platform=iOS Simulator" build
+xcodebuild -project IsThisRed.xcodeproj -scheme IsThisRed -destination "generic/platform=iOS Simulator" build
 ```
 
 Run all tests:
 ```
-xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M5)" test
+xcodebuild -project IsThisRed.xcodeproj -scheme IsThisRed -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M5)" test
 ```
 
 Run a single test (Swift Testing framework, not XCTest):
 ```
-xcodebuild -project "Is This Red?.xcodeproj" -scheme "Is This Red?" -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M5)" test -only-testing:"Is This Red?Tests/Is_This_Red_Tests/normalModeKeepsColorUnchanged()"
+xcodebuild -project IsThisRed.xcodeproj -scheme IsThisRed -destination "platform=iOS Simulator,name=iPad Pro 13-inch (M5)" test -only-testing:"IsThisRedTests/Is_This_Red_Tests/normalModeKeepsColorUnchanged()"
 ```
 
 Note: `xcodebuild` requires the active developer directory to point at Xcode, not the bare Command Line Tools (`xcode-select -p`). If it errors with "requires Xcode", switch with `sudo xcode-select -s /Applications/Xcode.app`, or just build/run from Xcode directly — that's the normal workflow for this iPad app.
 
-The project uses Xcode 16's file-system-synchronized groups (`PBXFileSystemSynchronizedRootGroup`): any `.swift` file placed under `Is This Red?/` is automatically part of the app target with no `project.pbxproj` edit needed. The same is true for `Is This Red?Tests/` and `Is This Red?UITests/`.
+The app is named **Is This Red?** but every path, target and module is `IsThisRed` — the question mark lives only in `INFOPLIST_KEY_CFBundleDisplayName`, because `?` is a shell wildcard and a URL-reserved character. Keep it out of filenames.
+
+The project uses Xcode 16's file-system-synchronized groups (`PBXFileSystemSynchronizedRootGroup`): any `.swift` file placed under `IsThisRed/` is automatically part of the app target with no `project.pbxproj` edit needed. The same is true for `IsThisRedTests/` and `IsThisRedUITests/`.
 
 ## Platform constraints
 

@@ -5,7 +5,7 @@
 
 import Testing
 import PencilKit
-@testable import Is_This_Red_
+@testable import IsThisRed
 
 struct DrawingSessionTests {
 

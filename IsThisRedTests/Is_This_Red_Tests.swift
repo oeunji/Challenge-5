@@ -7,7 +7,7 @@
 
 import Testing
 import SwiftUI
-@testable import Is_This_Red_
+@testable import IsThisRed
 
 struct Is_This_Red_Tests {
 

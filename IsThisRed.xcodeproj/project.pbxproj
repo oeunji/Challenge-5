@@ -12,39 +12,39 @@
 			containerPortal = EC67B2DB302C0899006E2EF8 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = EC67B2E2302C0899006E2EF8;
-			remoteInfo = "Is This Red?";
+			remoteInfo = IsThisRed;
 		};
 		EC67B2FB302C089A006E2EF8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EC67B2DB302C0899006E2EF8 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = EC67B2E2302C0899006E2EF8;
-			remoteInfo = "Is This Red?";
+			remoteInfo = IsThisRed;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		EC129C5C302E977500A71F4C /* CLAUDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CLAUDE.md; sourceTree = "<group>"; };
 		EC129C5E302E979100A71F4C /* architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = architecture.md; sourceTree = "<group>"; };
-		EC67B2E3302C089A006E2EF8 /* Is This Red?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Is This Red?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC67B2F0302C089A006E2EF8 /* Is This Red?Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Is This Red?Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC67B2FA302C089A006E2EF8 /* Is This Red?UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Is This Red?UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC67B2E3302C089A006E2EF8 /* IsThisRed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsThisRed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC67B2F0302C089A006E2EF8 /* IsThisRedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IsThisRedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC67B2FA302C089A006E2EF8 /* IsThisRedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IsThisRedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EC67B2E5302C089A006E2EF8 /* Is This Red? */ = {
+		EC67B2E5302C089A006E2EF8 /* IsThisRed */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Is This Red?";
+			path = IsThisRed;
 			sourceTree = "<group>";
 		};
-		EC67B2F3302C089A006E2EF8 /* Is This Red?Tests */ = {
+		EC67B2F3302C089A006E2EF8 /* IsThisRedTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Is This Red?Tests";
+			path = IsThisRedTests;
 			sourceTree = "<group>";
 		};
-		EC67B2FD302C089A006E2EF8 /* Is This Red?UITests */ = {
+		EC67B2FD302C089A006E2EF8 /* IsThisRedUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Is This Red?UITests";
+			path = IsThisRedUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -87,9 +87,9 @@
 			children = (
 				EC129C5C302E977500A71F4C /* CLAUDE.md */,
 				EC129C5F302E979100A71F4C /* docs */,
-				EC67B2E5302C089A006E2EF8 /* Is This Red? */,
-				EC67B2F3302C089A006E2EF8 /* Is This Red?Tests */,
-				EC67B2FD302C089A006E2EF8 /* Is This Red?UITests */,
+				EC67B2E5302C089A006E2EF8 /* IsThisRed */,
+				EC67B2F3302C089A006E2EF8 /* IsThisRedTests */,
+				EC67B2FD302C089A006E2EF8 /* IsThisRedUITests */,
 				EC67B2E4302C089A006E2EF8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,9 +97,9 @@
 		EC67B2E4302C089A006E2EF8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EC67B2E3302C089A006E2EF8 /* Is This Red?.app */,
-				EC67B2F0302C089A006E2EF8 /* Is This Red?Tests.xctest */,
-				EC67B2FA302C089A006E2EF8 /* Is This Red?UITests.xctest */,
+				EC67B2E3302C089A006E2EF8 /* IsThisRed.app */,
+				EC67B2F0302C089A006E2EF8 /* IsThisRedTests.xctest */,
+				EC67B2FA302C089A006E2EF8 /* IsThisRedUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,9 +107,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EC67B2E2302C0899006E2EF8 /* Is This Red? */ = {
+		EC67B2E2302C0899006E2EF8 /* IsThisRed */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EC67B304302C089A006E2EF8 /* Build configuration list for PBXNativeTarget "Is This Red?" */;
+			buildConfigurationList = EC67B304302C089A006E2EF8 /* Build configuration list for PBXNativeTarget IsThisRed */;
 			buildPhases = (
 				EC67B2DF302C0899006E2EF8 /* Sources */,
 				EC67B2E0302C0899006E2EF8 /* Frameworks */,
@@ -120,18 +120,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				EC67B2E5302C089A006E2EF8 /* Is This Red? */,
+				EC67B2E5302C089A006E2EF8 /* IsThisRed */,
 			);
-			name = "Is This Red?";
+			name = IsThisRed;
 			packageProductDependencies = (
 			);
-			productName = "Is This Red?";
-			productReference = EC67B2E3302C089A006E2EF8 /* Is This Red?.app */;
+			productName = IsThisRed;
+			productReference = EC67B2E3302C089A006E2EF8 /* IsThisRed.app */;
 			productType = "com.apple.product-type.application";
 		};
-		EC67B2EF302C089A006E2EF8 /* Is This Red?Tests */ = {
+		EC67B2EF302C089A006E2EF8 /* IsThisRedTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EC67B307302C089A006E2EF8 /* Build configuration list for PBXNativeTarget "Is This Red?Tests" */;
+			buildConfigurationList = EC67B307302C089A006E2EF8 /* Build configuration list for PBXNativeTarget IsThisRedTests */;
 			buildPhases = (
 				EC67B2EC302C089A006E2EF8 /* Sources */,
 				EC67B2ED302C089A006E2EF8 /* Frameworks */,
@@ -143,18 +143,18 @@
 				EC67B2F2302C089A006E2EF8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				EC67B2F3302C089A006E2EF8 /* Is This Red?Tests */,
+				EC67B2F3302C089A006E2EF8 /* IsThisRedTests */,
 			);
-			name = "Is This Red?Tests";
+			name = IsThisRedTests;
 			packageProductDependencies = (
 			);
-			productName = "Is This Red?Tests";
-			productReference = EC67B2F0302C089A006E2EF8 /* Is This Red?Tests.xctest */;
+			productName = IsThisRedTests;
+			productReference = EC67B2F0302C089A006E2EF8 /* IsThisRedTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		EC67B2F9302C089A006E2EF8 /* Is This Red?UITests */ = {
+		EC67B2F9302C089A006E2EF8 /* IsThisRedUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EC67B30A302C089A006E2EF8 /* Build configuration list for PBXNativeTarget "Is This Red?UITests" */;
+			buildConfigurationList = EC67B30A302C089A006E2EF8 /* Build configuration list for PBXNativeTarget IsThisRedUITests */;
 			buildPhases = (
 				EC67B2F6302C089A006E2EF8 /* Sources */,
 				EC67B2F7302C089A006E2EF8 /* Frameworks */,
@@ -166,13 +166,13 @@
 				EC67B2FC302C089A006E2EF8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				EC67B2FD302C089A006E2EF8 /* Is This Red?UITests */,
+				EC67B2FD302C089A006E2EF8 /* IsThisRedUITests */,
 			);
-			name = "Is This Red?UITests";
+			name = IsThisRedUITests;
 			packageProductDependencies = (
 			);
-			productName = "Is This Red?UITests";
-			productReference = EC67B2FA302C089A006E2EF8 /* Is This Red?UITests.xctest */;
+			productName = IsThisRedUITests;
+			productReference = EC67B2FA302C089A006E2EF8 /* IsThisRedUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -198,7 +198,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EC67B2DE302C0899006E2EF8 /* Build configuration list for PBXProject "Is This Red?" */;
+			buildConfigurationList = EC67B2DE302C0899006E2EF8 /* Build configuration list for PBXProject IsThisRed */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -212,9 +212,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EC67B2E2302C0899006E2EF8 /* Is This Red? */,
-				EC67B2EF302C089A006E2EF8 /* Is This Red?Tests */,
-				EC67B2F9302C089A006E2EF8 /* Is This Red?UITests */,
+				EC67B2E2302C0899006E2EF8 /* IsThisRed */,
+				EC67B2EF302C089A006E2EF8 /* IsThisRedTests */,
+				EC67B2F9302C089A006E2EF8 /* IsThisRedUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -270,12 +270,12 @@
 /* Begin PBXTargetDependency section */
 		EC67B2F2302C089A006E2EF8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EC67B2E2302C0899006E2EF8 /* Is This Red? */;
+			target = EC67B2E2302C0899006E2EF8 /* IsThisRed */;
 			targetProxy = EC67B2F1302C089A006E2EF8 /* PBXContainerItemProxy */;
 		};
 		EC67B2FC302C089A006E2EF8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EC67B2E2302C0899006E2EF8 /* Is This Red? */;
+			target = EC67B2E2302C0899006E2EF8 /* IsThisRed */;
 			targetProxy = EC67B2FB302C089A006E2EF8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -421,8 +421,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				INFOPLIST_KEY_CFBundleDisplayName = IsThisRed;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rossi.Is-This-Red-";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IsThisRed;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -452,8 +453,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				INFOPLIST_KEY_CFBundleDisplayName = IsThisRed;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rossi.Is-This-Red-";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IsThisRed;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -475,14 +477,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rossi.Is-This-Red-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IsThisRedTests;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Is This Red?.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Is This Red?";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IsThisRed.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/IsThisRed";
 			};
 			name = Debug;
 		};
@@ -497,14 +499,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rossi.Is-This-Red-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IsThisRedTests;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Is This Red?.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Is This Red?";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IsThisRed.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/IsThisRed";
 			};
 			name = Release;
 		};
@@ -517,14 +519,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rossi.Is-This-Red-UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IsThisRedUITests;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
-				TEST_TARGET_NAME = "Is This Red?";
+				TEST_TARGET_NAME = IsThisRed;
 			};
 			name = Debug;
 		};
@@ -537,21 +539,21 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rossi.Is-This-Red-UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IsThisRedUITests;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
-				TEST_TARGET_NAME = "Is This Red?";
+				TEST_TARGET_NAME = IsThisRed;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EC67B2DE302C0899006E2EF8 /* Build configuration list for PBXProject "Is This Red?" */ = {
+		EC67B2DE302C0899006E2EF8 /* Build configuration list for PBXProject IsThisRed */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC67B302302C089A006E2EF8 /* Debug */,
@@ -560,7 +562,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EC67B304302C089A006E2EF8 /* Build configuration list for PBXNativeTarget "Is This Red?" */ = {
+		EC67B304302C089A006E2EF8 /* Build configuration list for PBXNativeTarget IsThisRed */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC67B305302C089A006E2EF8 /* Debug */,
@@ -569,7 +571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EC67B307302C089A006E2EF8 /* Build configuration list for PBXNativeTarget "Is This Red?Tests" */ = {
+		EC67B307302C089A006E2EF8 /* Build configuration list for PBXNativeTarget IsThisRedTests */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC67B308302C089A006E2EF8 /* Debug */,
@@ -578,7 +580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EC67B30A302C089A006E2EF8 /* Build configuration list for PBXNativeTarget "Is This Red?UITests" */ = {
+		EC67B30A302C089A006E2EF8 /* Build configuration list for PBXNativeTarget IsThisRedUITests */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC67B30B302C089A006E2EF8 /* Debug */,
