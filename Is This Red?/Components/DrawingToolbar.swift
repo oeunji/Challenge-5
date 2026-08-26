@@ -68,7 +68,7 @@ struct DrawingToolbar: View {
 		.foregroundColor(Color("OnSurface"))
 		.padding(Spacing.x8)
 		.background(Color("SurfaceVariant"))
-		.cornerRadius(10)
+		.cornerRadius(Radius.standard)
 		.onAppear { tool.apply(to: canvasView) }
 		.onChange(of: tool) { tool.apply(to: canvasView) }
 	}

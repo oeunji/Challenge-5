@@ -11,7 +11,7 @@ struct VisionModeSelectView: View {
 
 	private enum Metric {
 		static let cardSpacing: CGFloat = Spacing.x12
-		static let cornerRadius: CGFloat = 14
+		static let cornerRadius: CGFloat = Radius.medium
 		static let cardMaxWidth: CGFloat = 400
 		static let cardMinHeight: CGFloat = 200
 	}

@@ -12,6 +12,7 @@ Figma 파일 [스스챌](https://www.figma.com/design/PYgPXCSRmgkM1VK1XtZ3e7/%EC
 | 색 | `Assets.xcassets` 컬러셋 | `Color("PrimaryBase")` |
 | 폰트 | `DesignSystem/Typography.swift` | `.font(Typography.title2)` |
 | 여백 | `DesignSystem/Spacing.swift` | `.padding(Spacing.x16)` |
+| 모서리 | `DesignSystem/Radius.swift` | `.cornerRadius(Radius.medium)` |
 | 그림자 | `DesignSystem/Elevation.swift` | `.deepElevation()` |
 
 토큰에 없는 값이 필요하면 임의로 반올림하지 말고 **먼저 물어볼 것.** 어떤 값이 왜 안 맞는지
@@ -54,6 +55,31 @@ Figma의 `spacing/16` ↔ `Spacing.x16`으로 대응한다.
 
 `x12`는 half-step이다. 8과 16 사이를 필요로 하는 자리가 코드에 반복해서 나와 뒤늦게
 추가했다. 나머지는 8의 배수다.
+
+## Border Radius
+
+Figma: `Token Documentation — Border Radius` (node `60:144`). 4단계.
+
+| `Radius` | 값 | 쓰는 곳 |
+| --- | --- | --- |
+| `standard` | 8pt | 툴바, 칩, 인풋 — 작은 크롬 |
+| `medium` | 16pt | 버튼, 일반 카드 |
+| `large` | 24pt | 모달, 대형 카드 |
+| — | 알약 | Figma의 `radius/full`. 코드에는 상수가 없다 — `Capsule()`로 그린다 |
+
+단계 수는 값의 등차수열이 아니라 **컴포넌트 크기 계층 수**에 맞춘 것이다. 이 앱의 계층은
+작은 크롬 / 일반 / 큰 면 셋이고, 거기에 알약을 더해 넷이다. 계층보다 토큰이 많으면 안 쓰는
+토큰이 생기고, 적으면 코드가 토큰 밖으로 샌다.
+
+**`radius/full`은 Swift 쪽에 상수를 두지 않는다.** Figma에서는 알약을 큰 반경 값으로
+표현할 수밖에 없지만 SwiftUI에는 `Capsule()`이라는 정확한 도형이 있다. `9999` 같은 상수를
+두면 그걸 `RoundedRectangle`에 넘기는 잘못된 사용을 부른다.
+
+`medium`은 뒤늦게 추가했다. 원래 8과 24뿐이었는데 버튼과 카드가 계속 그 사이(12·14·16)를
+필요로 했다 — `Spacing`의 `x12`와 같은 경우다.
+
+도형은 항상 `style: .continuous`로 그린다. iOS의 둥근 모서리는 원호가 아니라 연속 곡선이고,
+숫자보다 이쪽이 눈에 더 잘 띈다.
 
 ## Typography
 

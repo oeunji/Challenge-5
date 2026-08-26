@@ -31,7 +31,7 @@ private enum Token {
 		static let pressedY: CGFloat = 2
 	}
 
-	static let cardRadius: CGFloat = 16
+	static let cardRadius: CGFloat = Radius.medium
 }
 
 // MARK: - View + Elevation

@@ -122,7 +122,7 @@ extension ColorblindDrawView {
         }
         .padding(Metric.cardPadding)
         .background(.ultraThinMaterial)
-        .cornerRadius(Metric.cardPadding)
+        .cornerRadius(Radius.medium)
         .deepElevation()
     }
 

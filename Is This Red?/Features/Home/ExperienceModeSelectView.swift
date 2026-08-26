@@ -12,7 +12,7 @@ struct ExperienceModeSelectView: View {
 	// MARK: - Constants
 
 	private enum Metric {
-		static let cornerRadius: CGFloat = 24
+		static let cornerRadius: CGFloat = Radius.large
 		static let buttonWidth: CGFloat = 400
 		static let buttonMinHeight: CGFloat = 64
 	}

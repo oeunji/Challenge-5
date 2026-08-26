@@ -12,7 +12,7 @@ struct GlassButtonStyle: ButtonStyle {
     // MARK: - Constants
 
     private enum Metric {
-        static let cornerRadius: CGFloat = 16
+        static let cornerRadius: CGFloat = Radius.medium
     }
 
     // MARK: - Body
