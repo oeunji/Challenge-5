@@ -15,6 +15,8 @@ enum Spacing {
 	static let x4: CGFloat = 4
 	/// `spacing/8` — 8pt
 	static let x8: CGFloat = 8
+	/// `spacing/12` — 12pt
+	static let x12: CGFloat = 12
 	/// `spacing/16` — 16pt
 	static let x16: CGFloat = 16
 	/// `spacing/24` — 24pt

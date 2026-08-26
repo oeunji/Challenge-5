@@ -13,9 +13,9 @@ struct ColorblindDrawView: View {
 	// MARK: - Constants
 
 	private enum Metric {
-		static let stackSpacing: CGFloat = 12
-		static let overlayPadding: CGFloat = 14
-		static let cardPadding: CGFloat = 12
+		static let stackSpacing: CGFloat = Spacing.x12
+		static let overlayPadding: CGFloat = Spacing.x12
+		static let cardPadding: CGFloat = Spacing.x12
 		/// 캔버스는 거의 투명하게 두고, 그 아래 시뮬레이션된 이미지를 대신 보여줍니다.
 		static let canvasOpacity: Double = 0.02
 		static let pickerWidth: CGFloat = 220
@@ -110,7 +110,7 @@ extension ColorblindDrawView {
     }
 
     private var missionCard: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: Spacing.x8) {
             Text("Mission")
                 .font(Typography.caption1)
                 .foregroundStyle(.secondary)
@@ -151,6 +151,6 @@ extension ColorblindDrawView {
         .buttonStyle(.bordered)
         .disabled(viewModel.isRevealActive)
         .padding(.horizontal)
-        .padding(.bottom, 16)
+        .padding(.bottom, Spacing.x16)
     }
 }

@@ -26,7 +26,7 @@ struct ExperienceModeSelectView: View {
 	var body: some View {
 		ZStack {
 			GridBackground()
-			VStack(spacing: 16) {
+			VStack(spacing: Spacing.x16) {
 				Spacer()
 
 				Image("logo")
@@ -39,14 +39,14 @@ struct ExperienceModeSelectView: View {
 					.foregroundColor(AppColor.title)
 
 				Spacer()
-					.frame(height: 46)
+					.frame(height: Spacing.x48)
 
 				Text("Choose Your Experience")
 					.font(Typography.body.weight(.medium))
 					.foregroundColor(AppColor.subtitle)
-					.padding(.vertical, 10)
+					.padding(.vertical, Spacing.x12)
 
-				HStack(spacing: 16) {
+				HStack(spacing: Spacing.x16) {
 					modeButton(
 						title: "See Through Their Eyes",
 						subtitle: "Simulate how your drawing looks to them",
@@ -59,8 +59,8 @@ struct ExperienceModeSelectView: View {
 						route: .visionModeSelect
 					)
 				}
-				.padding(.horizontal, 32)
-				.padding(.vertical, 10)
+				.padding(.horizontal, Spacing.x32)
+				.padding(.vertical, Spacing.x12)
 
 				Spacer()
 			}
@@ -76,7 +76,7 @@ extension ExperienceModeSelectView {
         Button {
             coordinator.push(route)
         } label: {
-            VStack(spacing: 6) {
+            VStack(spacing: Spacing.x8) {
                 Text(title)
                     .font(Typography.headline)
                     .foregroundColor(AppColor.title)
@@ -88,7 +88,7 @@ extension ExperienceModeSelectView {
             }
             .frame(width: Metric.buttonWidth)
             .frame(minHeight: Metric.buttonMinHeight)
-            .padding(.vertical, 6)
+            .padding(.vertical, Spacing.x8)
             .cardSurface(cornerRadius: Metric.cornerRadius)
         }
         .buttonStyle(.plain)

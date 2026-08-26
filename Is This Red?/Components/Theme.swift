@@ -19,7 +19,7 @@ struct GridBackground: View {
 	// MARK: - Constants
 
 	private enum Metric {
-		static let spacing: CGFloat = 30
+		static let spacing: CGFloat = Spacing.x32
 		static let lineWidth: CGFloat = 1
 	}
 

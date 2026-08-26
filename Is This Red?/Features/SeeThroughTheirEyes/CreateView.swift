@@ -30,8 +30,8 @@ struct CreateView: View {
 					.foregroundStyle(.secondary)
 					.multilineTextAlignment(.center)
 					.frame(maxWidth: .infinity)
-					.padding(.horizontal, 20)
-					.padding(.vertical, 12)
+					.padding(.horizontal, Spacing.x24)
+					.padding(.vertical, Spacing.x12)
 					.background(.thinMaterial)
 			}
 			.toolbar {
@@ -60,6 +60,6 @@ extension CreateView {
         }
         .buttonStyle(.bordered)
         .tint(.clear)
-        .padding(.horizontal, 12)
+        .padding(.horizontal, Spacing.x12)
     }
 }

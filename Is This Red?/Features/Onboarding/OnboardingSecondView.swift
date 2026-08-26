@@ -30,7 +30,7 @@ struct OnboardingSecondView: View {
 			Color.black
 				.ignoresSafeArea()
 
-			VStack(spacing: 18) {
+			VStack(spacing: Spacing.x16) {
 				ForEach(0..<revealedCount, id: \.self) { index in
 					let isLast = index == Self.lines.count - 1
 					Text(Self.lines[index])
@@ -39,7 +39,7 @@ struct OnboardingSecondView: View {
 						.transition(.opacity)
 				}
 			}
-			.padding(.horizontal, 28)
+			.padding(.horizontal, Spacing.x32)
 		}
 		.contentShape(Rectangle())
 		.onTapGesture {

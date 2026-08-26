@@ -48,8 +48,11 @@ Figma: `Token Documentation — Color` (node `60:39`). 값은 전부 `Assets.xca
 
 Figma: `Token Documentation — Spacing` (node `60:99`). 8pt 그리드.
 
-`Spacing.x4` `x8` `x16` `x24` `x32` `x48` `x64` — 이름의 숫자가 곧 pt 값이고
+`Spacing.x4` `x8` `x12` `x16` `x24` `x32` `x48` `x64` — 이름의 숫자가 곧 pt 값이고
 Figma의 `spacing/16` ↔ `Spacing.x16`으로 대응한다.
+
+`x12`는 half-step이다. 8과 16 사이를 필요로 하는 자리가 코드에 반복해서 나와 뒤늦게
+추가했다. 나머지는 8의 배수다.
 
 ## Typography
 
@@ -104,10 +107,9 @@ SwiftUI `radius`는 표준편차 기준이라, 그대로 옮기면 그림자가 
 
 ## 아직 이관되지 않은 코드
 
-토큰은 갖춰졌지만 화면은 대부분 아직 하드코딩 상태다. **기존 코드가 곧 본보기라고 가정하지 말 것.**
+폰트와 여백은 이관이 끝났다. 색만 남아 있고, **색에 관해서는 기존 코드가 본보기가 아니다.**
 
-- `Features/`와 `Components/`에 하드코딩된 `.font(...)` 17곳
-- 하드코딩된 padding/spacing 숫자 16곳
+- 폰트와 여백은 리터럴이 0이다. `.font(...)`도 `.padding(...)`도 전부 토큰을 거친다
 - `Components/Theme.swift`의 `AppColor` — RGB 직접 입력이고 컬러셋과 값이 다르다
   (`title` `subtitle` `cardBorder` `grid`). 이관 시 두 값 중 무엇이 맞는지 확인이 필요하다.
 

@@ -13,9 +13,9 @@ struct VisionSimView: View {
 	// MARK: - Constants
 
 	private enum Metric {
-		static let spacing: CGFloat = 16
-		static let horizontalPadding: CGFloat = 16
-		static let drawingPadding: CGFloat = 24
+		static let spacing: CGFloat = Spacing.x16
+		static let horizontalPadding: CGFloat = Spacing.x16
+		static let drawingPadding: CGFloat = Spacing.x24
 	}
 
 	// MARK: - Properties

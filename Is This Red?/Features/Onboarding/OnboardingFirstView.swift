@@ -39,10 +39,10 @@ struct OnboardingFirstView: View {
 				.ignoresSafeArea()
 				.animation(.easeInOut(duration: 0.6), value: backgroundIndex)
 
-			VStack(spacing: 28) {
+			VStack(spacing: Spacing.x32) {
 				Spacer()
 
-				VStack(spacing: 6) {
+				VStack(spacing: Spacing.x8) {
 					ForEach(0..<Metric.titleLineCount, id: \.self) { line in
 						Text("Is This Red?")
 							.font(Typography.largeTitle.weight(.semibold))
@@ -50,21 +50,21 @@ struct OnboardingFirstView: View {
 							.shadow(radius: 10)
 							.opacity(opacity(forLine: line))
 					}
-					Spacer().frame(height: 8)
+					Spacer().frame(height: Spacing.x8)
 					Text("Choose Your Answer")
 						.font(Typography.subheadline.weight(.semibold))
 						.foregroundStyle(.white.opacity(0.85))
 				}
-				.padding(.horizontal, 24)
+				.padding(.horizontal, Spacing.x24)
 
 				Spacer()
 
-				HStack(spacing: 14) {
+				HStack(spacing: Spacing.x16) {
 					answerButton("Yes")
 					answerButton("No")
 				}
-				.padding(.horizontal, 22)
-				.padding(.bottom, 34)
+				.padding(.horizontal, Spacing.x24)
+				.padding(.bottom, Spacing.x32)
 			}
 		}
 	}

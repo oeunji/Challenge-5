@@ -10,7 +10,7 @@ struct VisionModeSelectView: View {
 	// MARK: - Constants
 
 	private enum Metric {
-		static let cardSpacing: CGFloat = 14
+		static let cardSpacing: CGFloat = Spacing.x12
 		static let cornerRadius: CGFloat = 14
 		static let cardMaxWidth: CGFloat = 400
 		static let cardMinHeight: CGFloat = 200
@@ -32,13 +32,13 @@ struct VisionModeSelectView: View {
 	var body: some View {
 		ZStack {
 			GridBackground()
-			VStack(spacing: 18) {
+			VStack(spacing: Spacing.x16) {
 				Spacer()
 
 				Text("Choose a Vision Mode")
 					.font(Typography.largeTitle.weight(.semibold))
 					.fontDesign(.rounded)
-					.padding(.top, 12)
+					.padding(.top, Spacing.x12)
 
 				Spacer()
 
@@ -50,7 +50,7 @@ struct VisionModeSelectView: View {
 						}
 					}
 				}
-				.padding(.horizontal, 20)
+				.padding(.horizontal, Spacing.x24)
 
 				Spacer()
 			}
@@ -66,7 +66,7 @@ extension VisionModeSelectView {
         Button {
             coordinator.push(.colorblindDraw(item.mode))
         } label: {
-            VStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .center, spacing: Spacing.x12) {
                 Text(item.mode.rawValue)
                     .font(Typography.title2.weight(.semibold))
                     .foregroundColor(AppColor.title)
@@ -77,7 +77,7 @@ extension VisionModeSelectView {
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: Metric.cardMaxWidth, minHeight: Metric.cardMinHeight)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, Spacing.x12)
             .cardSurface(cornerRadius: Metric.cornerRadius)
         }
         .buttonStyle(.plain)

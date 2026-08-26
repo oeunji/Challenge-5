@@ -11,7 +11,7 @@ struct DrawingToolbar: View {
 	// MARK: - Constants
 
 	private enum Metric {
-		static let itemSpacing: CGFloat = 15
+		static let itemSpacing: CGFloat = Spacing.x16
 		static let dividerHeight: CGFloat = 20
 		static let sliderWidth: CGFloat = 110
 		static let swatchSize: CGFloat = 20
@@ -66,7 +66,7 @@ struct DrawingToolbar: View {
 				.allowsHitTesting(tool.kind.isInking)
 		}
 		.foregroundColor(.black)
-		.padding(8)
+		.padding(Spacing.x8)
 		.background(Color(.systemGray6))
 		.cornerRadius(10)
 		.onAppear { tool.apply(to: canvasView) }
