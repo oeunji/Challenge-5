@@ -145,7 +145,7 @@ extension ColorblindDrawView {
             Text("Reveal Reality")
                 .font(Typography.callout.weight(.semibold))
                 .fontDesign(.rounded)
-                .foregroundColor(viewModel.isRevealActive ? .white : .black)
+                .foregroundColor(viewModel.isRevealActive ? Color("OnPrimary") : Color("OnSurface"))
                 .frame(maxWidth: .infinity, minHeight: 44)
         }
         .buttonStyle(.bordered)
