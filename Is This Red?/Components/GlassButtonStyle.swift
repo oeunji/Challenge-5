@@ -18,16 +18,19 @@ struct GlassButtonStyle: ButtonStyle {
     // MARK: - Body
 
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        let shape = RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
+
+        return configuration.label
             .foregroundStyle(.white)
             .background(
-                RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
-                    .fill(.white.opacity(configuration.isPressed ? 0.18 : 0.22))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Metric.cornerRadius, style: .continuous)
-                            .stroke(.white.opacity(0.35), lineWidth: 1)
+                // Color.clear로 한 겹 감싸야 그림자가 라벨이 아닌 배경 도형에만 붙습니다.
+                Color.clear
+                    .glossyElevation(
+                        fill: Color.white.opacity(configuration.isPressed ? 0.18 : 0.22),
+                        in: shape,
+                        pressed: configuration.isPressed
                     )
-                    .shadow(radius: configuration.isPressed ? 2 : 10)
+                    .overlay(shape.stroke(.white.opacity(0.35), lineWidth: 1))
             )
             .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
             .animation(.easeInOut(duration: 0.12), value: configuration.isPressed)

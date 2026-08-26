@@ -113,17 +113,17 @@ extension ColorblindDrawView {
         VStack(alignment: .leading, spacing: Spacing.x8) {
             Text("Mission")
                 .font(Typography.caption1)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppColor.subtitle)
 
             Text(viewModel.missionText)
                 .font(Typography.subheadline.weight(.semibold))
                 .fontDesign(.rounded)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color("OnSurface"))
         }
         .padding(Metric.cardPadding)
         .background(.ultraThinMaterial)
         .cornerRadius(Metric.cardPadding)
-        .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 4)
+        .deepElevation()
     }
 
     private var revealPicker: some View {

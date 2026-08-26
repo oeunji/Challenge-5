@@ -57,7 +57,7 @@ struct VisionSimView: View {
 				coordinator.popToRoot()
 			}
 			.padding()
-			.foregroundColor(.black)
+			.foregroundColor(Color("OnSurface"))
 		}
 		.navigationTitle("See Through Their Eyes")
 		.navigationBarTitleDisplayMode(.inline)
@@ -89,7 +89,7 @@ extension VisionSimView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: side, height: side)
-                    .border(Color.gray.opacity(0.3))
+                    .border(Color("Outline"))
             }
         }
     }

@@ -60,14 +60,14 @@ struct DrawingToolbar: View {
 			divider
 
 			Slider(value: $tool.width, in: tool.kind.widthRange ?? 2...12, step: 1)
-				.tint(.black)
+				.tint(Color("OnSurface"))
 				.frame(width: Metric.sliderWidth)
 				.opacity(tool.kind.isInking ? 1 : 0.2)
 				.allowsHitTesting(tool.kind.isInking)
 		}
-		.foregroundColor(.black)
+		.foregroundColor(Color("OnSurface"))
 		.padding(Spacing.x8)
-		.background(Color(.systemGray6))
+		.background(Color("SurfaceVariant"))
 		.cornerRadius(10)
 		.onAppear { tool.apply(to: canvasView) }
 		.onChange(of: tool) { tool.apply(to: canvasView) }

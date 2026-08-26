@@ -7,10 +7,10 @@ import SwiftUI
 
 /// 온보딩 이후 화면들이 공유하는 색상.
 enum AppColor {
-	static let title = Color(red: 0.1647, green: 0.0275, blue: 0.0275)
-	static let subtitle = Color(red: 0.4275, green: 0.2706, blue: 0.2706)
-	static let cardBorder = Color(red: 0.8471, green: 0.8157, blue: 0.8157)
-	static let grid = Color.gray.opacity(0.18)
+	static let title = Color("OnSurface")
+	static let subtitle = Color("OnSurfaceVariant")
+	static let cardBorder = Color("Outline")
+	static let grid = Color("SurfaceVariant")
 }
 
 /// 흰 배경 위에 일정 간격의 모눈을 그립니다.
@@ -26,7 +26,7 @@ struct GridBackground: View {
 	// MARK: - Body
 
 	var body: some View {
-		Color.white
+		Color("Surface")
 			.ignoresSafeArea()
 			.overlay(
 				GeometryReader { proxy in

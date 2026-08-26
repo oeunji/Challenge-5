@@ -23,7 +23,7 @@ struct CardSurface: ViewModifier {
 		let shape = RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
 
 		return content
-			.background(.white, in: shape)
+			.background(Color("Surface"), in: shape)
 			.overlay(shape.strokeBorder(AppColor.cardBorder, lineWidth: Metric.borderWidth))
 	}
 }

@@ -30,6 +30,7 @@ Figma: `Token Documentation — Color` (node `60:39`). 값은 전부 `Assets.xca
 | `Surface` | `#FFFFFF` | neutral/surface | 기본 배경 |
 | `SurfaceVariant` | `#F5F5F5` | neutral/surface-variant | 한 단계 눌린 배경 |
 | `OnSurface` | `#131313` | neutral/on-surface | 본문 텍스트 |
+| `OnSurfaceVariant` | `#5F5F5F` | neutral/on-surface-variant | 보조 텍스트, 부제 |
 | `Outline` | `#E0E0E0` | neutral/outline | 구분선, 테두리 |
 | `Accent` | `#B71C1C` | semantic/accent | 어두운 악센트 |
 | `Shadow` | `#000000` α0.25 | semantic/shadow | 그림자 색 |
@@ -95,6 +96,11 @@ Color.clear.glossyElevation(fill: Color("PrimaryBase"))  // Elevation/Glossy
 | Deep | Drop · blur 40 · y10 · 검정 15% | `radius: 20, y: 10` |
 | Glossy | Inner · blur 4 · y2 · 흰색 40% | `.inner(radius: 2, y: 2)` |
 | Glossy | Drop · blur 8 · y4 · 검정 10% | `radius: 4, y: 4` |
+| Glossy Pressed | Drop · blur 4 · y2 · 검정 10% | `radius: 2, y: 2` |
+
+`Glossy Pressed`는 눌림 **상태**다. `glossyElevation(pressed:)`로 갈라 쓰며, 하이라이트는
+그대로 두고 드롭 섀도만 절반이 된다. 상태는 이렇게 토큰 한 쌍으로 두고, 알파값을
+`overlay/light-18` 같은 원시 토큰으로 흩뿌리지 않는다 — 값이 바뀌면 이름이 거짓말이 된다.
 
 **Figma blur는 SwiftUI radius의 두 배다.** Figma/CSS의 blur는 표준편차의 2배 기준이고
 SwiftUI `radius`는 표준편차 기준이라, 그대로 옮기면 그림자가 두 배로 번진다. 새 그림자 토큰을
@@ -107,11 +113,18 @@ SwiftUI `radius`는 표준편차 기준이라, 그대로 옮기면 그림자가 
 
 ## 아직 이관되지 않은 코드
 
-폰트와 여백은 이관이 끝났다. 색만 남아 있고, **색에 관해서는 기존 코드가 본보기가 아니다.**
+폰트·여백·공용 색은 이관이 끝났다. 남은 리터럴은 화면 고유의 값들뿐이다.
 
 - 폰트와 여백은 리터럴이 0이다. `.font(...)`도 `.padding(...)`도 전부 토큰을 거친다
-- `Components/Theme.swift`의 `AppColor` — RGB 직접 입력이고 컬러셋과 값이 다르다
-  (`title` `subtitle` `cardBorder` `grid`). 이관 시 두 값 중 무엇이 맞는지 확인이 필요하다.
+- `Components/Theme.swift`의 `AppColor`는 전부 에셋 컬러를 가리킨다 —
+  `title`→`OnSurface`, `subtitle`→`OnSurfaceVariant`, `cardBorder`→`Outline`,
+  `grid`→`SurfaceVariant`
+- 아직 리터럴인 색: `OnboardingFirstView`의 배경 5색(화면 고유의 연출값이라 토큰이 아니다),
+  `GlassButtonStyle`의 흰색 알파들, `VisionSimView`의 미리보기 테두리
+
+보조 텍스트에 `Shadow`(검정 25%)를 쓰지 말 것. 흰 배경에서 대비가 1.8:1이라 WCAG
+4.5:1에 크게 못 미친다. 한때 `AppColor.subtitle`이 그 값이었고, 그래서
+`OnSurfaceVariant`(6.4:1)를 따로 만들었다. `Shadow`는 이름 그대로 그림자 전용이다.
 
 이관은 화면 단위로 한다. 한 파일씩, 레이아웃 결과는 그대로 두고 값의 출처만 바꾼 뒤 빌드한다.
 디자인 변경과 값 이관을 같은 커밋에 섞으면 무엇이 화면을 깨뜨렸는지 가릴 수 없다.

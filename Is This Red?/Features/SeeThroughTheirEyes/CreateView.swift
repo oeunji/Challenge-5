@@ -27,7 +27,7 @@ struct CreateView: View {
 			.safeAreaInset(edge: .bottom) {
 				Text("Feel free to draw, and tap the Next button when you’re done.")
 					.font(Typography.footnote)
-					.foregroundStyle(.secondary)
+					.foregroundStyle(AppColor.subtitle)
 					.multilineTextAlignment(.center)
 					.frame(maxWidth: .infinity)
 					.padding(.horizontal, Spacing.x24)
@@ -56,7 +56,7 @@ extension CreateView {
             Text("Next")
                 .font(Typography.callout.weight(.semibold))
                 .fontDesign(.rounded)
-                .foregroundColor(.black)
+                .foregroundColor(Color("OnSurface"))
         }
         .buttonStyle(.bordered)
         .tint(.clear)
