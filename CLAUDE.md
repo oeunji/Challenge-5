@@ -47,3 +47,5 @@ If no token fits, don't round to the nearest one — say which value doesn't fit
 Type, spacing, and corner radius are fully migrated — existing screens are a fair example to copy. The remaining literals are deliberate (per-screen art direction, glass material alphas, the drawing palette). See `docs/design-system.md` for the full token tables, the Figma source frames, and the conversion gotchas (Figma blur is 2× SwiftUI `radius`; Figma `Title 1` is SwiftUI `.title`).
 
 This app is about color-vision deficiency, so UI state must never be conveyed by color alone — pair color with an icon, weight, border, or position.
+
+`DESIGN.md` covers why each screen looks and behaves the way it does — read it before changing layout or visual language, not just before changing tokens.
