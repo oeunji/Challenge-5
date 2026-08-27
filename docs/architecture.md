@@ -19,7 +19,7 @@ Bridge/       the only place UIKit is touched DrawingView, DrawingViewDelegate
 
 `SeeThroughTheirEyes/` and `DrawAsThem/` never reference each other. Everything they share lives in the four folders below `Features/`.
 
-Any `.swift` file placed under `Is This Red?/` joins the app target automatically (`PBXFileSystemSynchronizedRootGroup`) — moving files between these folders requires no `project.pbxproj` edit.
+Any `.swift` file placed under `IsThisRed/` joins the app target automatically (`PBXFileSystemSynchronizedRootGroup`) — moving files between these folders requires no `project.pbxproj` edit.
 
 ## Navigation
 

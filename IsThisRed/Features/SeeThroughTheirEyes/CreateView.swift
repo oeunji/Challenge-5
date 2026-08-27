@@ -1,0 +1,65 @@
+//
+//  CreateView.swift
+//  Is This Red?
+//
+//  Created by 이은지 on 2/25/26.
+//
+
+import SwiftUI
+import PencilKit
+
+struct CreateView: View {
+
+	// MARK: - Properties
+
+	@Environment(AppCoordinator.self) private var coordinator
+	@Environment(DrawingSession.self) private var session
+	@State private var canvasView = PKCanvasView()
+	@State private var tool = DrawingTool()
+
+	// MARK: - Body
+
+	var body: some View {
+		DrawingView(canvasView: canvasView) {
+			session.drawing = canvasView.drawing
+		}
+			.ignoresSafeArea(edges: .bottom)
+			.safeAreaInset(edge: .bottom) {
+				Text("Feel free to draw, and tap the Next button when you’re done.")
+					.font(Typography.footnote)
+					.foregroundStyle(AppColor.subtitle)
+					.multilineTextAlignment(.center)
+					.frame(maxWidth: .infinity)
+					.padding(.horizontal, Spacing.x24)
+					.padding(.vertical, Spacing.x12)
+					.background(.thinMaterial)
+			}
+			.toolbar {
+				ToolbarItem(placement: .topBarTrailing) {
+					nextButton
+				}
+				ToolbarItem(placement: .principal) {
+					DrawingToolbar(tool: $tool, canvasView: canvasView)
+				}
+			}
+	}
+}
+
+// MARK: - Subviews
+
+extension CreateView {
+    
+    private var nextButton: some View {
+        Button {
+            coordinator.push(.visionSim)
+        } label: {
+            Text("Next")
+                .font(Typography.callout.weight(.semibold))
+                .fontDesign(.rounded)
+                .foregroundColor(Color("OnSurface"))
+        }
+        .buttonStyle(.bordered)
+        .tint(.clear)
+        .padding(.horizontal, Spacing.x12)
+    }
+}
